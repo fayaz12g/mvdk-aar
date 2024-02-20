@@ -361,10 +361,11 @@ def select_mario_folder():
     for root, dirs, _ in os.walk(romfs_folder):
         if "blyt" in dirs:
             parent_folder = os.path.dirname(root)
+            new_blarc_file = os.path.join(parent_folder, os.path.basename(root) + ".blarc")
             pack_folder_to_blarc(root, os.path.join(parent_folder, os.path.basename(root) + ".blarc"))
-            compress_zstd(os.path.join(parent_folder, os.path.basename(root) + ".blarc"))
-            shutil.rmtree(root)
-            os.remove(parent_folder, os.path.basename(root) + ".blarc")
+            shutil.rmtree(root) 
+            compress_zstd(new_blarc_file)
+            os.remove(new_blarc_file)
 
     ##########################
     #          Finish        #
