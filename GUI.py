@@ -360,8 +360,9 @@ def select_mario_folder():
     print("Repacking new blarc files. This step may take about 10 seconds")
     for root, dirs, _ in os.walk(romfs_folder):
         if "blyt" in dirs:
-            pack_folder_to_blarc(root, os.path.join(root, + ".blarc"))
-            compress_zstd(os.path.join(root, os.path.basename(root) + ".blarc"))
+            parent_folder = os.path.dirname(root)
+            pack_folder_to_blarc(root, os.path.join(parent_folder, os.path.basename(root) + ".blarc"))
+            compress_zstd(os.path.join(parent_folder, os.path.basename(root) + ".blarc"))
 
     ##########################
     #          Finish        #
