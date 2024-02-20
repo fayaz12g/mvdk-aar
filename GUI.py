@@ -38,12 +38,12 @@ from controller import controller_files
 tool_version = "1.0.1"
 
 root = customtkinter.CTk()
-root.title(f"Fayaz's Settings {tool_version} for Super Mario 3D World + Bowser's Fury")
+root.title(f"Fayaz's Settings {tool_version} for Mario vs Donkey Kong")
 root.geometry("500x720")
 
 customtkinter.set_appearance_mode("system")
 customtkinter.set_default_color_theme("blue")  
-windowtitle = customtkinter.CTkLabel(master=root, font=(CTkFont, 20), text="Fayaz's SMO Utility {tool_version}")
+windowtitle = customtkinter.CTkLabel(master=root, font=(CTkFont, 20), text="Fayaz's MVDK Utility {tool_version}")
 
 ###############################################
 ###########    GLOBAL SETTINGS      ###########
@@ -277,10 +277,10 @@ def select_mario_folder():
     scaling_factor = (16/9) / (int(numerator_entry.get()) / int(denominator_entry.get()))
     username = getpass.getuser()
     if output_yuzu.get() is True:
-        input_folder = f"C:/Users/{username}/AppData/Roaming/yuzu/load/010028600EBDA000"
+        input_folder = f"C:/Users/{username}/AppData/Roaming/yuzu/load/0100B99019412000"
         process_name = "yuzu.exe"
     if output_ryujinx.get() is True:
-        input_folder = f"C:/Users/{username}/AppData/Roaming/Ryujinx/mods/contents/010028600EBDA000"
+        input_folder = f"C:/Users/{username}/AppData/Roaming/Ryujinx/mods/contents/0100B99019412000"
         process_name = "ryujinx.exe"
     else:
         process_name = "yuzu.exe"
@@ -685,7 +685,7 @@ notebook.add("Credits")
 
 credits_label = ClickableLabel(master=notebook.tab("Credits"), text=
                     ('Utility created by fayaz\n'
-                     'https://github.com/fayaz12g/sm3dw-aar\n'
+                     'https://github.com/fayaz12g/mvdk-aar\n'
                      'ko-fi.com/fayaz12\n'
                      '\n\nWith special help from\n'
                      'Christopher Fields (cfields7)\n'

@@ -26,13 +26,13 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
         file_path = os.path.join(patch_folder, file_name)
 
         if version_variable == "1.0.0":
-            nsobidid = "9F7EFC2FB9653E5CDE03030478F23EDA7D18EF44"
+            nsobidid = "37CE685A99F0BC0FB72132C40015F101ECB81C46"
             replacement_value = "008FADE0"
             replacement2_value = "009692D0"
             visual_fix = visual_fixesa
 
-        elif version_variable == "1.1.0":
-            nsobidid = "9F7EFC2FB9653E5CDE03030478F23EDA7D18EF44"
+        elif version_variable == "1.0.1":
+            nsobidid = "43AE51EE9766867DA5F1272CA0D3D8A60AC53296"
             replacement_value = "008FADE0"
             replacement2_value = "009692D0"
             visual_fix = visual_fixesb
@@ -43,12 +43,13 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
 @flag offset_shift 0x100
 
 @enabled
-{replacement_value} {hex_value}
-{replacement2_value} {hex_value2}
-0091CFC8 A9AA8AD2
-0091CFCC A902A8F2
-008B6C1C A8AA8A52
-008B6C20 A802A872
+0045fd90 CA719C52
+0045fd94 0A03A872
+00e71c20 1F2003D5
+0003ce68 00902F1E
+016b10d8 1F2003D5
+00e169c8 C8719C52
+00e169cc 0803A872
 @stop
 
 {visual_fix}
