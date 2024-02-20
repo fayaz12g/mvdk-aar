@@ -1,93 +1,25 @@
 import os
-import libyaz0
-import SarcLib
+import sys
+import subprocess
 
+def compress_zstd(input_file):
+    import zstandard as zstd
 
-def pack_folder_to_blarc(folder_path, output_file, level):
-    """
-    Pack the files and folders in the folder_path to a .blarc output_file.
-    """
-    root = os.path.abspath(folder_path)
-    endianness = '>'
+    # Compress the input file using zstd
+    output_file = f"{input_file}.zs"
+    cctx = zstd.ZstdCompressor()
 
-    pack(root, endianness, level, output_file)
+    with open(input_file, 'rb') as f_in, open(output_file, 'wb') as f_out:
+        compressed_data = cctx.compress(f_in.read())
+        f_out.write(compressed_data)
 
-def pack(root, endianness, level, outname):
-    """
-    Pack the files and folders in the root folder.
-    """
-    if "\\" in root:
-        root = "/".join(root.split("\\"))
+    print(f"Compressed file: {output_file}")
 
-    if root[-1] == "/":
-        root = root[:-1]
+if __name__ == "__main__":
 
-    arc = SarcLib.SARC_Archive(endianness=endianness)
-    lenroot = len(root.split("/"))
+    if len(sys.argv) < 2:
+        print("Please provide the input file path and the destination file path.")
+        sys.exit(1)
 
-    for path, dirs, files in os.walk(root):
-        if "\\" in path:
-            path = "/".join(path.split("\\"))
-
-        lenpath = len(path.split("/"))
-
-        if lenpath == lenroot:
-            path = ""
-
-        else:
-            path = "/".join(path.split("/")[lenroot - lenpath:])
-
-        for file in files:
-            if path:
-                filename = ''.join([path, "/", file])
-
-            else:
-                filename = file
-
-            print(f"Repacking {file}")
-            
-
-            fullname = ''.join([root, "/", filename])
-
-            i = 0
-            for folder in filename.split("/")[:-1]:
-                if not i:
-                    exec("folder%i = SarcLib.Folder(folder + '/'); arc.addFolder(folder%i)".replace('%i', str(i)))
-
-                else:
-                    exec("folder%i = SarcLib.Folder(folder + '/'); folder%m.addFolder(folder%i)".replace('%i', str(i)).replace('%m', str(i - 1)))
-
-                i += 1
-
-            with open(fullname, "rb") as f:
-                inb = f.read()
-
-            hasFilename = True
-            if file[:5] == "hash_":
-                hasFilename = False
-
-            if not i:
-                arc.addFile(SarcLib.File(file, inb, hasFilename))
-
-            else:
-                exec("folder%m.addFile(SarcLib.File(file, inb, hasFilename))".replace('%m', str(i - 1)))
-
-    data, maxAlignment = arc.save()
-
-    if level != -1:
-        outData = libyaz0.compress(data, maxAlignment, level)
-        del data
-
-        if not outname:
-            print(f"Writing {outname}")
-            outname = ''.join([root, ".szs"])
-
-    else:
-        outData = data
-        if not outname:
-            print(f"Writing {outname}")
-            outname = ''.join([root, ".sarc"])
-
-    with open(outname, "wb+") as output:
-        # print(f"Writing {outname}")
-        output.write(outData)
+    input_file = sys.argv[1]
+    compress_zstd(input_file)

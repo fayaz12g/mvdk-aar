@@ -23,30 +23,30 @@ def create_visuals(do_screenshot, do_disable_fxaa, do_disable_dynamicres, do_dis
         disablebloom = "enabled"
         
     visuals1_0_0 = f'''// LOD Increase
-@{screenshot}
+@disabled
 00927BFC 28008052
 00874AC0 29008052
 @stop
 
 // Disable FXAA
-@{disablefxaa}
+@disabled
 00950CE8 09008052
 00950CC0 09008052
 @stop
 
 // Disable Dynamic Resolution
-@{disabledynamicres}
+@disabled
 007FC380 C0035FD6
 007FC1E0 C0035FD6
 @stop
     
 // Disable Bloom Effect
-@{disablebloom}
+@disabled
 008193B0 C0035FD6
 @stop
 
 // Disable DOF
-@{disabledof}
+@disabled
 00888AB0 C0035FD6
 @stop
 '''

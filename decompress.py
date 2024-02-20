@@ -1,66 +1,37 @@
 import os
-import SarcLib
-import libyaz0
+import sys
+import subprocess
 
-def extract_blarc(file, output_folder):
+def decompress_zstd(input_file, output_folder, mod_name):
+    import zstandard as zstd
 
-    with open(file, "rb") as inf:
-        inb = inf.read()
+    # Create the output folder path
+    aar_mod_folder = os.path.join(output_folder, mod_name)
+    temp_folder = os.path.join(aar_mod_folder, "temp")
+    os.makedirs(temp_folder, exist_ok=True)
 
-    while libyaz0.IsYazCompressed(inb):
-        inb = libyaz0.decompress(inb)
+    # Decompress the zstd file
+    output_file = os.path.join(temp_folder, os.path.splitext(os.path.basename(input_file))[0])
+    dctx = zstd.ZstdDecompressor()
 
-    name = os.path.splitext(os.path.basename(file))[0]  # Extract the base name of the file without extension
-    print(f"Unpacking {name}")
-    ext = SarcLib.guessFileExt(inb)
+    with open(input_file, 'rb') as f_in, open(output_file, 'wb') as f_out:
+        decompressed_data = dctx.decompress(f_in.read())
+        f_out.write(decompressed_data)
 
-    if ext != ".sarc":
-        with open(os.path.join(output_folder, ''.join([name, ext])), "wb") as out:
-            out.write(inb)
-    else:
-        arc = SarcLib.SARC_Archive()
-        arc.load(inb)
+    print(f"Decompressed file: {output_file}")
 
-        root = os.path.join(output_folder, name)  # Output path will be in the specified output folder
-        if not os.path.isdir(root):
-            os.makedirs(root)
+if __name__ == "__main__":
+    # Install zstandard if not already installed
+    import zstandard as zstd
 
-        files = []
+    if len(sys.argv) < 3:
+        print("Please provide the input file path and output folder path.")
+        sys.exit(1)
 
-        def getAbsPath(folder, path):
-            nonlocal root
-            nonlocal files
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
+    dctx = zstd.ZstdDecompressor()
 
-            for checkObj in folder.contents:
-                if isinstance(checkObj, SarcLib.File):
-                    files.append([os.path.join(path, checkObj.name), checkObj.data])
-                else:
-                    path_ = os.path.join(root, path, checkObj.name)
-                    if not os.path.isdir(path_):
-                        os.makedirs(path_)
-                    getAbsPath(checkObj, os.path.join(path, checkObj.name))
-
-        for checkObj in arc.contents:
-            if isinstance(checkObj, SarcLib.File):
-                files.append([checkObj.name, checkObj.data])
-            else:
-                path = os.path.join(root, checkObj.name)
-                if not os.path.isdir(path):
-                    os.makedirs(path)
-                getAbsPath(checkObj, os.path.join(root, checkObj.name))
-
-        for extracted_file, fileData in files:
-            # print(f"Unpacking {extracted_file}")
-            extracted_file_path = os.path.join(root, extracted_file)
-            with open(extracted_file_path, "wb") as out:
-                out.write(fileData)
-
-            # if extracted_file.endswith("bflyt"):
-                # patch_blyt(extracted_file_path, "RootPane", "scale_x", scaling_factor)
-
-        layout_lyarc = os.path.join(root, "layout.lyarc")
-        if os.path.exists(layout_lyarc):
-            extract_blarc(layout_lyarc, root)
-            # os.remove(layout_lyarc)
-
-    os.remove(file)
+    with open(input_file, 'rb') as f_in, open(output_file, 'wb') as f_out:
+        decompressed_data = dctx.decompress(f_in.read())
+        f_out.write(decompressed_data)

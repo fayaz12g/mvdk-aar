@@ -29,7 +29,11 @@ import sys
 import shutil
 import psutil
 from visuals import create_visuals
-from controller import controller_files
+from decompress import decompress_zstd
+from compress import compress_zstd
+from repack import pack
+from repack import pack_folder_to_blarc
+from extract import extract_blarc
 
 #######################
 #### Create Window ####
@@ -313,17 +317,35 @@ def select_mario_folder():
     # Create the PCHTXT Files
     visual_fixes = create_visuals(do_screenshot.get(), do_disable_fxaa.get(), do_disable_dynamicres.get(), do_disable_dof.get(), do_disable_bloom.get())
     create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes)
-    romfs_folder = os.path.join(input_folder, mod_name, "romfs", "LayoutData")
+    romfs_folder = os.path.join(input_folder, mod_name, "romfs")
     theromfs_folder = os.path.join(input_folder, mod_name, "romfs")
-
-    # Download and put Controlelr Files in Place
-    controller_files(controller_type.get(), theromfs_folder)
 
     # Decomperss SZS and Lyarc Files
     for file in os.listdir(romfs_folder):
         if file.lower().endswith(".szs"):
             file_path = os.path.join(romfs_folder, file)
             extract_blarc(file_path, romfs_folder)
+
+    #################
+    # ZS Extraction #
+    #################
+
+    global zs_file_path
+    zs_file_path = os.path.join(output_folder, mod_name, "romfs", "UI", "LayoutArchive", "Common.Product.110.Nin_NX_NVN.blarc.zs")
+    print("Extracting ZS.")
+    decompress_zstd(zs_file_path, output_folder, mod_name)
+    progressbar.set(.25)
+
+    ####################
+    # BLARC Extraction #
+    ####################
+
+    temp_folder = os.path.join(output_folder, mod_name, "temp")
+    print("Extracting BLARC.")
+    file = os.path.join(temp_folder, "Common.Product.110.Nin_NX_NVN.blarc")
+    blarc_file_path = os.path.join(temp_folder, "Common.Product.110.Nin_NX_NVN.blarc")
+    extract_blarc(file, output_folder, mod_name)
+    progressbar.set(.6)
 
     # Perform Pane Strecthing
     patch_blarc(str(ratio_value), HUD_pos, text_folder)
@@ -337,14 +359,37 @@ def select_mario_folder():
             pack_folder_to_blarc(layout_folder_path, layout_lyarc_path, level)
             shutil.rmtree(layout_folder_path)
     
-    # Compress all remaining folders to SZS and delete them
-    for dir_name in os.listdir(romfs_folder):
-        level = 1
-        dir_path = os.path.join(romfs_folder, dir_name)
-        if os.path.isdir(os.path.join(romfs_folder, dir_name)):
-            szs_output_path = os.path.join(romfs_folder, f"{dir_name}.szs")
-            pack_folder_to_blarc(os.path.join(romfs_folder, dir_name), szs_output_path, level)
-            shutil.rmtree(dir_path)
+    ##########################
+    # Cleaning and Repacking #
+    ##########################
+    
+    os.remove(file)
+    print("Deleted old blarc file.")
+    print("Repacking new blarc file. This step may take about 10 seconds")
+    progressbar.set(.7)
+    pack_folder_to_blarc(blarc_folder, blarc_file_path)
+    progressbar.set(.9)
+    print("Repacked new blarc file.")
+    print("Repacking new zs file.")
+    compress_zstd(blarc_file_path)
+    print("Repacked new zs file.")
+    progressbar.set(.95)
+    new_source_zs = os.path.join(output_folder, mod_name, "temp", "Common.Product.110.Nin_NX_NVN.blarc.zs")
+    destination_zs = os.path.join(output_folder, mod_name, "romfs", "UI", "LayoutArchive", "Common.Product.110.Nin_NX_NVN.blarc.zs")
+    print("Copied zs file.")
+    os.remove(destination_zs)
+    destination_directory = os.path.dirname(destination_zs)
+    os.makedirs(destination_directory, exist_ok=True)
+    shutil.copy2(new_source_zs, destination_zs)
+    print("Copied new zs file to mod.")
+    shutil.rmtree(temp_folder)
+    progressbar.stop()
+    progressbar.set(1)
+    print("Removed temp folder.")
+
+    ##########################
+    #          Finish        #
+    ##########################
 
     if open_when_done.get() == True:
         print ("Complete! Opening output folder.")
