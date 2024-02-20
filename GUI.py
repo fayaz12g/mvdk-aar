@@ -397,11 +397,11 @@ def pack_widgets():
     aspect_ratio_divider.pack(side="left")
     denominator_entry.pack(side="left")
     
-    fxaa_checkbox.pack(padx=5, pady=5)
-    screenshot_checkbox.pack(padx=5, pady=5)
-    dynamicres_checkbox.pack(padx=10, pady=10)
-    dof_checkbox.pack(padx=10, pady=10)
-    bloom_checkbox.pack(padx=10, pady=10)
+    # fxaa_checkbox.pack(padx=5, pady=5)
+    # screenshot_checkbox.pack(padx=5, pady=5)
+    # dynamicres_checkbox.pack(padx=10, pady=10)
+    # dof_checkbox.pack(padx=10, pady=10)
+    # bloom_checkbox.pack(padx=10, pady=10)
     
     image_label.pack()
 
@@ -461,11 +461,11 @@ def forget_packing():
     aspect_ratio_divider.pack_forget()
     denominator_entry.pack_forget()
     
-    fxaa_checkbox.pack_forget()
-    screenshot_checkbox.pack_forget()
-    dynamicres_checkbox.pack_forget()
-    dof_checkbox.pack_forget()
-    bloom_checkbox.pack_forget()
+    # fxaa_checkbox.pack_forget()
+    # screenshot_checkbox.pack_forget()
+    # dynamicres_checkbox.pack_forget()
+    # dof_checkbox.pack_forget()
+    # bloom_checkbox.pack_forget()
 
     image_label.pack_forget()
     image_layout_label.pack_forget()
@@ -661,7 +661,7 @@ button_color_dropdown = customtkinter.CTkOptionMenu(master=notebook.tab("Control
 button_layout_label= customtkinter.CTkLabel(master=notebook.tab("Controller"), text="Button Layout:")
 button_layout_dropdown = customtkinter.CTkOptionMenu(master=notebook.tab("Controller"), variable=button_layout, values=full_button_layouts, command=update_image)
 
-# notebook.delete("Controller") # delete this line to readd controller options
+notebook.delete("Controller") # delete this line to readd controller options
 
 ###################
 ####### HUD #######
