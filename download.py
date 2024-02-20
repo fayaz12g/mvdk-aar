@@ -38,7 +38,7 @@ def download_extract_copy(input_folder, mod_name):
     with zipfile.ZipFile(zip_file_source, "r") as zip_ref:
         zip_ref.extractall(extract_folder)
     
-    if not os.path.isfile(zip2_file_source) and not os.path.isdir(perm_folder):
+    if not os.path.isfile(zip2_file_source):
         # Download the ZIP file
         print("Downloading zip file. This may take up to 10 seconds.")
         response = requests.get(zip2_url)
@@ -47,12 +47,11 @@ def download_extract_copy(input_folder, mod_name):
             print("Writing contents to temp folder.")
             file.write(response.content)
 
-        # Extract the ZIP file
-        extract2_folder = os.path.join(input_folder, mod_name, "temp2")
-        print(f"Extracting zip to {extract2_folder}. This can also take a few seconds.")
-        with zipfile.ZipFile(zip2_file_source, "r") as zip_ref:
-            zip_ref.extractall(extract2_folder)
-        os.remove(zip2_file_source)
+    # Extract the ZIP file
+    extract2_folder = os.path.join(input_folder, mod_name, "temp2")
+    print(f"Extracting zip to {extract2_folder}. This can also take a few seconds.")
+    with zipfile.ZipFile(zip2_file_source, "r") as zip_ref:
+        zip_ref.extractall(extract2_folder)
 
 
     # Copy the extracted file

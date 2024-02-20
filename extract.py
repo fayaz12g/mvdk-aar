@@ -4,10 +4,7 @@ import time
 import SarcLib
 import libyaz0
 
-def extract_blarc(file, output_folder, mod_name):
-    """
-    Extract the given archive.
-    """
+def extract_blarc(file):
     with open(file, "rb") as inf:
         inb = inf.read()
 
@@ -18,13 +15,13 @@ def extract_blarc(file, output_folder, mod_name):
     ext = SarcLib.guessFileExt(inb)
 
     if ext != ".sarc":
-        with open(os.path.join(output_folder, ''.join([name, ext])), "wb") as out:
+        with open(os.path.join(os.path.dirname(file), ''.join([name, ext])), "wb") as out:
             out.write(inb)
     else:
         arc = SarcLib.SARC_Archive()
         arc.load(inb)
 
-        root = os.path.join(output_folder, mod_name, "temp", name)  # Update the construction of the output path
+        root = os.path.join(os.path.dirname(file), name)  # Update the construction of the output path
         if not os.path.isdir(root):
             os.mkdir(root)
 
@@ -56,25 +53,3 @@ def extract_blarc(file, output_folder, mod_name):
             print(f"Unpacking {file}")
             with open(os.path.join(root, file), "wb") as out:
                 out.write(fileData)
-
-def main(blarc_file_path, output_folder):
-    if not os.path.isfile(blarc_file_path):
-        print("Invalid BLARC file path.")
-        sys.exit(1)
-
-    if not os.path.isdir(output_folder):
-        print("Invalid output folder path.")
-        sys.exit(1)
-
-    extracted_file_path = os.path.join(output_folder, mod_name, "temp", "Common.Product.110.Nin_NX_NVN.blarc")
-    extract(extracted_file_path, output_folder)
-
-if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print("Usage: python extract.py <blarc_file_path> <output_folder>")
-        sys.exit(1)
-
-    blarc_file_path = sys.argv[1]
-    output_folder = sys.argv[2]
-
-    main(blarc_file_path, output_folder)

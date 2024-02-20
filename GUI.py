@@ -1,7 +1,5 @@
 import os
 import sys
-from compress import pack 
-from compress import pack_folder_to_blarc
 import customtkinter
 from tkinter import scrolledtext
 from tkinter.filedialog import askdirectory
@@ -10,7 +8,6 @@ from threading import Thread
 import shutil
 from download import download_extract_copy
 from patch import create_patch_files
-from decompress import extract_blarc
 import getpass
 from script import patch_blarc
 from PIL import Image
@@ -301,6 +298,7 @@ def select_mario_folder():
         return
     text_folder = os.path.join(input_folder, mod_name)
     patch_folder = os.path.join(input_folder, mod_name, "exefs")
+    romfs_folder = os.path.join(input_folder, mod_name, "romfs")
     if corner_HUD.get() == True:
         print("Corner HUD")
         HUD_pos = "corner"
@@ -317,14 +315,6 @@ def select_mario_folder():
     # Create the PCHTXT Files
     visual_fixes = create_visuals(do_screenshot.get(), do_disable_fxaa.get(), do_disable_dynamicres.get(), do_disable_dof.get(), do_disable_bloom.get())
     create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes)
-    romfs_folder = os.path.join(input_folder, mod_name, "romfs")
-    theromfs_folder = os.path.join(input_folder, mod_name, "romfs")
-
-    # Decomperss SZS and Lyarc Files
-    for file in os.listdir(romfs_folder):
-        if file.lower().endswith(".szs"):
-            file_path = os.path.join(romfs_folder, file)
-            extract_blarc(file_path, romfs_folder)
 
     #################
     # ZS Extraction #
@@ -335,7 +325,8 @@ def select_mario_folder():
             if file.lower().endswith(".zs"):
                 file_path = os.path.join(root, file)
                 print(f"Extracting {file}.")
-                decompress_zstd(file_path, romfs_folder, mod_name)
+                decompress_zstd(file_path)
+                os.remove(file_path)
 
     ####################
     # BLARC Extraction #
@@ -346,7 +337,8 @@ def select_mario_folder():
             if file.lower().endswith(".blarc"):
                 file_path = os.path.join(root, file)
                 print(f"Extracting {file}.")
-                extract_blarc(file_path, romfs_folder, mod_name)
+                extract_blarc(file_path)
+                os.remove(file_path)
                 
 
     # Perform Pane Strecthing
