@@ -363,6 +363,8 @@ def select_mario_folder():
             parent_folder = os.path.dirname(root)
             pack_folder_to_blarc(root, os.path.join(parent_folder, os.path.basename(root) + ".blarc"))
             compress_zstd(os.path.join(parent_folder, os.path.basename(root) + ".blarc"))
+            shutil.rmtree(root)
+            os.remove(parent_folder, os.path.basename(root) + ".blarc")
 
     ##########################
     #          Finish        #

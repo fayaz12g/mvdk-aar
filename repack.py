@@ -37,7 +37,6 @@ def pack_folder_to_blarc(folder_path, output_file):
     level = -1
 
     pack(root, endianness, level, output_file)
-    os.remove(root)
 
 def pack(root, endianness, level, outname):
     """

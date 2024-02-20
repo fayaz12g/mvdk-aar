@@ -13,5 +13,4 @@ def compress_zstd(input_file):
         f_out.write(compressed_data)
 
     print(f"Compressed file: {output_file}")
-    os.remove(input_file)
 
