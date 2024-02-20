@@ -357,25 +357,11 @@ def select_mario_folder():
     # Cleaning and Repacking #
     ##########################
     
-    os.remove(file)
-    print("Deleted old blarc file.")
-    print("Repacking new blarc file. This step may take about 10 seconds")
-    pack_folder_to_blarc(blarc_folder, blarc_file_path)
-    print("Repacked new blarc file.")
-    print("Repacking new zs file.")
-    compress_zstd(blarc_file_path)
-    print("Repacked new zs file.")
-    new_source_zs = os.path.join(output_folder, mod_name, "temp", "Common.Product.110.Nin_NX_NVN.blarc.zs")
-    destination_zs = os.path.join(output_folder, mod_name, "romfs", "UI", "LayoutArchive", "Common.Product.110.Nin_NX_NVN.blarc.zs")
-    print("Copied zs file.")
-    os.remove(destination_zs)
-    destination_directory = os.path.dirname(destination_zs)
-    os.makedirs(destination_directory, exist_ok=True)
-    shutil.copy2(new_source_zs, destination_zs)
-    print("Copied new zs file to mod.")
-    shutil.rmtree(temp_folder)
-
-    print("Removed temp folder.")
+    print("Repacking new blarc files. This step may take about 10 seconds")
+    for root, dirs, _ in os.walk(romfs_folder):
+        if "blyt" in dirs:
+            pack_folder_to_blarc(root, os.path.join(root, + ".blarc"))
+            compress_zstd(os.path.join(root, os.path.basename(root) + ".blarc"))
 
     ##########################
     #          Finish        #

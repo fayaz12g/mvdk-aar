@@ -37,6 +37,7 @@ def pack_folder_to_blarc(folder_path, output_file):
     level = -1
 
     pack(root, endianness, level, output_file)
+    os.remove(root)
 
 def pack(root, endianness, level, outname):
     """
@@ -119,13 +120,3 @@ def pack(root, endianness, level, outname):
     with open(outname, "wb+") as output:
         print(f"Writing {outname}")
         output.write(outData)
-
-if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print("Usage: python compress_folder.py <folder_path> <output_file>")
-        sys.exit(1)
-
-    folder_path = sys.argv[1]
-    output_file = sys.argv[2]
-
-    pack_folder_to_blarc(folder_path, output_file)

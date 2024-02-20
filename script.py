@@ -24,11 +24,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         print(f"{command} {pane} of {filename}")
         offset_dict = {'shift_x': 0x40, 'shift_y': 0x48, 'scale_x': 0x70, 'scale_y': 0x78} 
         modified_name = filename + "_name"
-        if operation == "shift_x":
-            full_path_of_file = os.path.join(unpacked_folder, 'romfs', 'LayoutData', filename, 'layout', 'blyt', f'{filename}.bflyt')
-        else:
-            full_path_of_file = file_paths.get(modified_name)
-        with open(modified_name, 'rb') as f:
+        full_path_of_file = file_paths.get(modified_name)
+        with open(full_path_of_file, 'rb') as f:
             content = f.read().hex()
         start_rootpane = content.index(b'RootPane'.hex())
         pane_hex = str(pane).encode('utf-8').hex()
