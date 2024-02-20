@@ -330,22 +330,24 @@ def select_mario_folder():
     # ZS Extraction #
     #################
 
-    global zs_file_path
-    zs_file_path = os.path.join(output_folder, mod_name, "romfs", "UI", "LayoutArchive", "Common.Product.110.Nin_NX_NVN.blarc.zs")
-    print("Extracting ZS.")
-    decompress_zstd(zs_file_path, output_folder, mod_name)
-    progressbar.set(.25)
+    for root, _, files in os.walk(romfs_folder):
+        for file in files:
+            if file.lower().endswith(".zs"):
+                file_path = os.path.join(root, file)
+                print(f"Extracting {file}.")
+                decompress_zstd(file_path, romfs_folder, mod_name)
 
     ####################
     # BLARC Extraction #
     ####################
 
-    temp_folder = os.path.join(output_folder, mod_name, "temp")
-    print("Extracting BLARC.")
-    file = os.path.join(temp_folder, "Common.Product.110.Nin_NX_NVN.blarc")
-    blarc_file_path = os.path.join(temp_folder, "Common.Product.110.Nin_NX_NVN.blarc")
-    extract_blarc(file, output_folder, mod_name)
-    progressbar.set(.6)
+    for root, _, files in os.walk(romfs_folder):
+        for file in files:
+            if file.lower().endswith(".blarc"):
+                file_path = os.path.join(root, file)
+                print(f"Extracting {file}.")
+                extract_blarc(file_path, romfs_folder, mod_name)
+                
 
     # Perform Pane Strecthing
     patch_blarc(str(ratio_value), HUD_pos, text_folder)
@@ -366,14 +368,11 @@ def select_mario_folder():
     os.remove(file)
     print("Deleted old blarc file.")
     print("Repacking new blarc file. This step may take about 10 seconds")
-    progressbar.set(.7)
     pack_folder_to_blarc(blarc_folder, blarc_file_path)
-    progressbar.set(.9)
     print("Repacked new blarc file.")
     print("Repacking new zs file.")
     compress_zstd(blarc_file_path)
     print("Repacked new zs file.")
-    progressbar.set(.95)
     new_source_zs = os.path.join(output_folder, mod_name, "temp", "Common.Product.110.Nin_NX_NVN.blarc.zs")
     destination_zs = os.path.join(output_folder, mod_name, "romfs", "UI", "LayoutArchive", "Common.Product.110.Nin_NX_NVN.blarc.zs")
     print("Copied zs file.")
@@ -383,8 +382,7 @@ def select_mario_folder():
     shutil.copy2(new_source_zs, destination_zs)
     print("Copied new zs file to mod.")
     shutil.rmtree(temp_folder)
-    progressbar.stop()
-    progressbar.set(1)
+
     print("Removed temp folder.")
 
     ##########################
