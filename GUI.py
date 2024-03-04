@@ -712,6 +712,12 @@ credits_label = ClickableLabel(master=notebook.tab("Credits"), text=
                     ('Utility created by fayaz\n'
                      'https://github.com/fayaz12g/mvdk-aar\n'
                      'ko-fi.com/fayaz12\n'
+                     '\n\nWith thanks to\n'
+                     'fruithapje21\n'
+                     'for the original script the scale root panes for TOTK'
+                     '\n\nMade possible by\n'
+                     'Fl4sh_#9174\n'
+                     'for the 3D world aspect ratio fix'
                      '\n\nWith special help from\n'
                      'Christopher Fields (cfields7)\n'
                      'for code beautification and being a great best friend :)'))
