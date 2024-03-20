@@ -36,7 +36,7 @@ from extract import extract_blarc
 #### Create Window ####
 #######################
 
-tool_version = "1.0.1"
+tool_version = "1.0.2"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Mario vs Donkey Kong")
