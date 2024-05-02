@@ -28,15 +28,15 @@ import psutil
 from visuals import create_visuals
 from decompress import decompress_zstd
 from compress import compress_zstd
-from repack import pack
-from repack import pack_folder_to_blarc
+from repack import *
 from extract import extract_blarc
+from functions import *
 
 #######################
 #### Create Window ####
 #######################
 
-tool_version = "1.0.2"
+tool_version = "2.0.0"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Mario vs Donkey Kong")
