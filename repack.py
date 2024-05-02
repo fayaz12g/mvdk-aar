@@ -114,8 +114,8 @@ def pack(root, endianness, level, outname):
         outData = data
         if not outname:
             outname = ''.join([root, ".sarc"])
-            print(f"Writing {outname}")
+            # print(f"Writing {outname}")
 
     with open(outname, "wb+") as output:
-        print(f"Writing {outname}")
+        # print(f"Writing {outname}")
         output.write(outData)

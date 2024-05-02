@@ -12,5 +12,7 @@ def compress_zstd(input_file):
         compressed_data = cctx.compress(f_in.read())
         f_out.write(compressed_data)
 
-    print(f"Compressed file: {output_file}")
+    compressed_filename = os.path.basename(output_file)
+
+    print(f"Compressed {compressed_filename}")
 
