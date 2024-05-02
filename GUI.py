@@ -37,7 +37,7 @@ import pyautogui
 #### Create Window ####
 #######################
 
-tool_version = "2.0.1"
+tool_version = "2.0.2"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Mario vs Donkey Kong")
@@ -684,6 +684,8 @@ hud_label= customtkinter.CTkLabel(content_frame, text='Hud Location:')
 center_checkbox = customtkinter.CTkRadioButton(master=notebook.tab("HUD"), text="Center", variable=centered_HUD, value=1, command=lambda: [corner_HUD.set(False), repack_widgets])
 corner_checkbox = customtkinter.CTkRadioButton(master=notebook.tab("HUD"), text="Corner", variable=corner_HUD, value=2, command=lambda: [centered_HUD.set(False), repack_widgets])
 corner_checkbox.select()
+
+notebook.delete("HUD") # delete this line to readd HUD options
 
 ########################
 ####### GENERATE #######
