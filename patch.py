@@ -2,7 +2,7 @@ import os
 import math
 from functions import *
 
-def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
+def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes, ultra_wide_camera):
 
     visual_fixesa = visual_fixes[0]
     visual_fixesb = visual_fixes[1]
@@ -38,6 +38,10 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
             replace7 = "00e169cc"
             visual_fix = visual_fixesb
 
+        if ultra_wide_camera == True:
+                line_4 = f"\n{replace4} {hex_value}"
+        else:
+             line_4 = ""
         patch_content = f'''@nsobid-{nsobidid}
 
 @flag print_values
@@ -46,8 +50,7 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
 @enabled
 {replace1} {hex_value1}
 {replace2} {hex_value2}
-{replace3} 1F2003D5
-{replace4} {hex_value}
+{replace3} 1F2003D5{line_4}
 {replace5} 1F2003D5
 {replace6} {hex_value3}
 {replace7} {hex_value4}

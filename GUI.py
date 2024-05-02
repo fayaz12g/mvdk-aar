@@ -321,7 +321,7 @@ def select_mario_folder():
 
     # Create the PCHTXT Files
     visual_fixes = create_visuals(do_screenshot.get(), do_disable_fxaa.get(), do_disable_dynamicres.get())
-    create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes)
+    create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes, ultra_wide_camera.get())
 
     #################
     # ZS Extraction #
@@ -408,7 +408,7 @@ def pack_widgets():
     screenshot_checkbox.pack(padx=5, pady=5)
     dynamicres_checkbox.pack(padx=10, pady=10)
     # dof_checkbox.pack(padx=10, pady=10)
-    # bloom_checkbox.pack(padx=10, pady=10)
+    bloom_checkbox.pack(padx=10, pady=10)
     
     image_label.pack()
 
@@ -473,7 +473,7 @@ def forget_packing():
     screenshot_checkbox.pack_forget()
     dynamicres_checkbox.pack_forget()
     # dof_checkbox.pack_forget()
-    # bloom_checkbox.pack_forget()
+    bloom_checkbox.pack_forget()
 
     image_label.pack_forget()
     image_layout_label.pack_forget()
@@ -553,7 +553,7 @@ fxaa_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="
 screenshot_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Depth of Field", variable=do_screenshot)
 dynamicres_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="2880x1620 Docked", variable=do_disable_dynamicres)
 dof_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Depth of Field (DOF)", variable=do_disable_dof)
-bloom_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Bloom Effect", variable=do_disable_bloom)
+bloom_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Ultrawide Camera", variable=do_disable_bloom)
 
 ##########################
 ####### Controller #######
