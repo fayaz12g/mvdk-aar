@@ -54,7 +54,7 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes, 
 {replace5} 1F2003D5
 {replace6} {hex_value3}
 {replace7} {hex_value4}
-@stop
+@disabled
 
 {visual_fix}
 

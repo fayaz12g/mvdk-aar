@@ -31,7 +31,7 @@ def create_visuals(do_DOF, do_120, do_docked):
 00E75DA8 88CAC0F2
 003A8A60 0868C1F2
 003A8A34 8ACA8052
-@stop
+@disabled
 
 
 // Disable DOF
@@ -57,12 +57,12 @@ def create_visuals(do_DOF, do_120, do_docked):
 00e75db8 88CAC0F2
 003a8a70 0868C1F2
 003a8a44 8ACA8052
-@stop
+@disabled
 
 // 120 FPS
 @{fps120}
 008193B0 C0035FD6
-@stop
+@disabled
 
 // Disable DOF
 @{dof}
