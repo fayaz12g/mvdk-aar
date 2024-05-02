@@ -18,10 +18,24 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
 
         if version_variable == "1.0.0":
             nsobidid = "37CE685A99F0BC0FB72132C40015F101ECB81C46"
+            replace1 = "0045FD80"
+            replace2 = "0045FD84"
+            replace3 = "00E71C10"
+            replace4 = "0003CE68"
+            replace5 = "016B10D8"
+            replace6 = "00E169B8"
+            replace7 = "00E169BC"
             visual_fix = visual_fixesa
 
         elif version_variable == "1.0.1":
             nsobidid = "43AE51EE9766867DA5F1272CA0D3D8A60AC53296"
+            replace1 = "0045fd90"
+            replace2 = "0045fd94"
+            replace3 = "00e71c20"
+            replace4 = "0003ce68"
+            replace5 = "016b10d8"
+            replace6 = "00e169c8"
+            replace7 = "00e169cc"
             visual_fix = visual_fixesb
 
         patch_content = f'''@nsobid-{nsobidid}
@@ -30,13 +44,13 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
 @flag offset_shift 0x100
 
 @enabled
-0045fd90 {hex_value1}
-0045fd94 {hex_value2}
-00e71c20 1F2003D5
-0003ce68 {hex_value}
-016b10d8 1F2003D5
-00e169c8 {hex_value3}
-00e169cc {hex_value4}
+{replace1} {hex_value1}
+{replace2} {hex_value2}
+{replace3} 1F2003D5
+{replace4} {hex_value}
+{replace5} 1F2003D5
+{replace6} {hex_value3}
+{replace7} {hex_value4}
 @stop
 
 {visual_fix}
