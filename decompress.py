@@ -12,4 +12,6 @@ def decompress_zstd(input_file):
         decompressed_data = dctx.decompress(f_in.read())
         f_out.write(decompressed_data)
 
-    print(f"Decompressed file: {output_file}")
+    decompressed_filename = os.path.basename(output_file)
+
+    print(f"Decompressed {decompressed_filename}")
