@@ -42,7 +42,7 @@ def create_visuals(do_DOF, do_120, do_docked):
 
 
     visuals1_0_1 = f'''// 2880x1620 Docked
-@disabled
+@{docked}
 002f9d78 02688152
 002f9d68 83CA8052
 00e73c6c 086881D2

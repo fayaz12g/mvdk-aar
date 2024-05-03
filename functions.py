@@ -32,7 +32,7 @@ def mvdk_hex23(num):
     asm_4 = f"movk w8, #0x{hex_1}, lsl #16"
     hex_value1 = asm_to_hex(asm_1)
     hex_value2 = asm_to_hex(asm_2)
-    hex_value3 = asm_to_hex(asm_1)
-    hex_value4 = asm_to_hex(asm_2)
+    hex_value3 = asm_to_hex(asm_3)
+    hex_value4 = asm_to_hex(asm_4)
     return hex_value1, hex_value2, hex_value3, hex_value4
 
