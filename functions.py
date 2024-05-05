@@ -35,4 +35,3 @@ def mvdk_hex23(num):
     hex_value3 = asm_to_hex(asm_3)
     hex_value4 = asm_to_hex(asm_4)
     return hex_value1, hex_value2, hex_value3, hex_value4
-
