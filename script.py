@@ -80,7 +80,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
 
         patch_blyt('Pa_CongratsWorldClearBanner', 'P_Banner', 'scale_x', 1/s1)
         patch_blyt('GameLevelWin_00', 'L_World', 'scale_x', 1/s1)
-        patch_blyt('WorldLayout', 'RootPane', 'scale_x', s1)
+        # patch_blyt('WorldLayout', 'N_Base', 'scale_x', s1)
         patch_blyt('GameLevelWin_00', 'A_alignment_00', 'shift_x', do_special_math(-450, aspect_ratio))
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_BG', 'scale_x', 1/s1)
