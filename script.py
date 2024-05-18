@@ -121,7 +121,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         patch_blyt('WorldIntro', 'P_Fade', 'scale_x', 1/s1)
         patch_blyt('WorldIntro', 'P_Icon_00', 'shift_x', do_some_math(-802, aspect_ratio))
         patch_blyt('WorldIntro', 'T_WorldName_00', 'shift_x', do_some_math(-794, aspect_ratio))
-        patch_blyt('PaMenu_Btn_Slot', 'P_Highlight', 'scale_x', 1/s1)
+        # patch_blyt('PaMenu_Btn_Slot', 'P_Highlight', 'scale_x', 1/s1)
 
         # patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', 1/s1) #Mario Bubble
         # patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', 1/s1) #Toad Bubble
