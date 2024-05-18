@@ -35,3 +35,11 @@ def mvdk_hex23(num):
     hex_value3 = asm_to_hex(asm_3)
     hex_value4 = asm_to_hex(asm_4)
     return hex_value1, hex_value2, hex_value3, hex_value4
+
+def float2hex(f):
+        return hex(struct.unpack('>I', struct.pack('<f', f))[0]).lstrip('0x').rjust(8,'0').upper()
+
+def do_some_math(num, ratio):
+    num = int(num)
+    ratio = int(ratio)
+    return ((num/(16/9))*(21/9))

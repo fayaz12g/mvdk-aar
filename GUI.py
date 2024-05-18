@@ -37,7 +37,7 @@ import pyautogui
 #### Create Window ####
 #######################
 
-tool_version = "2.1.0"
+tool_version = "3.0.0"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Mario vs Donkey Kong")
@@ -287,53 +287,54 @@ def select_mario_folder():
     if centered_HUD.get() == True:
         print("Center HUD")
         HUD_pos = "center"
-    # Clean up the working directory
-    if os.path.exists(text_folder):
-        shutil.rmtree(text_folder)
 
-    # Download the SMO Layout Files
-    download_extract_copy(input_folder, mod_name)
+    # ##################
+    # ## Pre-Cleaning ##
+    # ##################
 
-    # Create the PCHTXT Files
-    visual_fixes = create_visuals(do_screenshot.get(), do_disable_fxaa.get(), do_disable_dynamicres.get())
-    create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes, do_disable_bloom.get())
+    # if os.path.exists(text_folder):
+    #     shutil.rmtree(text_folder)
 
-    #################
-    # ZS Extraction #
-    #################
+    # #################
+    # ## Downloading ##
+    # #################
 
-    for root, _, files in os.walk(romfs_folder):
-        for file in files:
-            if file.lower().endswith(".zs"):
-                file_path = os.path.join(root, file)
-                print(f"Extracting {file}.")
-                decompress_zstd(file_path)
-                os.remove(file_path)
+    # download_extract_copy(input_folder, mod_name)
 
-    ####################
-    # BLARC Extraction #
-    ####################
+    # # Create the PCHTXT Files
+    # visual_fixes = create_visuals(do_screenshot.get(), do_disable_fxaa.get(), do_disable_dynamicres.get())
+    # create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes, do_disable_bloom.get())
 
-    for root, _, files in os.walk(romfs_folder):
-        for file in files:
-            if file.lower().endswith(".blarc"):
-                file_path = os.path.join(root, file)
-                print(f"Extracting {file}.")
-                extract_blarc(file_path)
-                os.remove(file_path)
+    # #################
+    # # ZS Extraction #
+    # #################
+
+    # for root, _, files in os.walk(romfs_folder):
+    #     for file in files:
+    #         if file.lower().endswith(".zs"):
+    #             file_path = os.path.join(root, file)
+    #             print(f"Extracting {file}.")
+    #             decompress_zstd(file_path)
+    #             os.remove(file_path)
+
+    # ####################
+    # # BLARC Extraction #
+    # ####################
+
+    # for root, _, files in os.walk(romfs_folder):
+    #     for file in files:
+    #         if file.lower().endswith(".blarc"):
+    #             file_path = os.path.join(root, file)
+    #             print(f"Extracting {file}.")
+    #             extract_blarc(file_path)
+    #             os.remove(file_path)
                 
+    ###########################
+    # Perform Pane Strecthing #
+    ###########################
 
-    # Perform Pane Strecthing
-    patch_blarc(str(ratio_value), HUD_pos, text_folder)
+    patch_blarc(str(ratio_value), HUD_pos, romfs_folder)
 
-    # Compress layout folders and delete them
-    for root, dirs, files in os.walk(input_folder):
-        if "layout" in dirs:
-            level = -1
-            layout_folder_path = os.path.join(root, "layout")
-            layout_lyarc_path = os.path.join(root, "layout.lyarc")
-            pack_folder_to_blarc(layout_folder_path, layout_lyarc_path, level)
-            shutil.rmtree(layout_folder_path)
     
     ##########################
     # Cleaning and Repacking #
@@ -344,7 +345,7 @@ def select_mario_folder():
         if "blyt" in dirs:
             parent_folder = os.path.dirname(root)
             new_blarc_file = os.path.join(parent_folder, os.path.basename(root) + ".blarc")
-            pack_folder_to_blarc(root, os.path.join(parent_folder, os.path.basename(root) + ".blarc"))
+            pack_folder_to_blarc(root, new_blarc_file)
             shutil.rmtree(root) 
             compress_zstd(new_blarc_file)
             os.remove(new_blarc_file)
@@ -704,7 +705,7 @@ credits_label = ClickableLabel(master=notebook.tab("Credits"), text=
                      'for the original script the scale root panes for TOTK'
                      '\n\nMade possible by\n'
                      'Fl4sh_#9174\n'
-                     'for the 3D world aspect ratio fix'
+                     'for the 3d elements aspect ratio fix'
                      '\n\nWith special help from\n'
                      'Christopher Fields (cfields7)\n'
                      'for code beautification and being a great best friend :)'))

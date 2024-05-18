@@ -1,14 +1,14 @@
 import os
 import struct
+from functions import *
 
 def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
     unpacked_folder = str(unpacked_folder)
     aspect_ratio = float(aspect_ratio)
     print(f"Aspect ratio is {aspect_ratio}")
     HUD_pos = str(HUD_pos)
-     
-    def float2hex(f):
-        return hex(struct.unpack('>I', struct.pack('<f', f))[0]).lstrip('0x').rjust(8,'0').upper()
+
+    file_paths = {}
 
     def patch_blyt(filename, pane, operation, value):
         if operation == "scale_x" or operation == "scale_y":
@@ -37,22 +37,20 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
 
 
     def patch_anim(folder, filename, offset, value):
-        full_path = os.path.join(unpacked_folder, 'romfs', 'LayoutData', folder, 'layout', 'anim', f'{filename}.bflan') # update this to work with layout.lyarc structure
+        full_path = os.path.join(unpacked_folder, 'romfs', 'LayoutData', folder, 'layout', 'anim', f'{filename}.bflan') 
         with open(full_path, 'rb') as f:
             content = f.read().hex()
         idx = offset
         content_new = content[:idx] + float2hex(value) + content[idx+8:]
         with open(full_path, 'wb') as f:
             f.write(bytes.fromhex(content_new))  
-
-    file_paths = {}
-
+            
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
     
-    do_not_scale_rootpane = []
+    do_not_scale_rootpane = ["Loading_00", "Saving_00", "Pa_LoadingBlocks_00", "SceneChangeFade_00", "MenuBackground_00", "Pa_BlurBackground"]
    
-    rootpane_by_y = []
+    rootpane_by_y = ["MenuBackground_00"]
 
     for root, dirs, files in os.walk(blyt_folder):
         for file_name in files:
@@ -80,13 +78,61 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
                 patch_blyt(name, 'RootPane', 'scale_y', 1/s1)
                 patch_blyt(name, 'RootPane', 'scale_x', 1)
 
-        # patch_blyt('TitleLogo', 'ParControlGuideBar', 'scale_x', 1/s1)
+        patch_blyt('Pa_CongratsWorldClearBanner', 'P_Banner', 'scale_x', 1/s1)
+        patch_blyt('GameLevelWin_00', 'L_World', 'scale_x', 1/s1)
+        patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
+        patch_blyt('GameModeChoice_00', 'P_BG', 'scale_x', 1/s1)
+        patch_blyt('GameModeChoice_00', 'P_Background', 'scale_x', 1/s1)
+        patch_blyt('GameModeChoice_00', 'L_Blur', 'scale_x', 1/s1)
+        patch_blyt('GameLevelSelect_00', 'N_Background', 'scale_x', 1/s1)
+        patch_blyt('GameLevelSelect_00', 'P_Cutout', 'scale_x', 1/s1)
+        patch_blyt('GameLevelSelect_00', 'P_Cutout', 'scale_y', 1/s1)
+        patch_blyt('GameLevelSelect_00', 'P_HeaderBG_01', 'scale_x', 1/s1)
+        patch_blyt('GameLevelSelect_00', 'P_HeaderBG_02', 'scale_x', 1/s1)
+        patch_blyt('GameLevelSelect_00', 'P_HeaderBGShadow_00', 'scale_x', 1/s1)
+        patch_blyt('GameLevelSelect_00', 'L_GameMode', 'shift_x', do_some_math(1520, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'L_StarScore', 'shift_x', do_some_math(799, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'L_Lives', 'shift_x', do_some_math(651, aspect_ratio))
+        # patch_blyt('GameLevelSelect_00', 'L_2P_Header', 'shift_x', do_some_math(710, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'P_Icon', 'shift_x', do_some_math(-802, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'T_WorldName_00', 'shift_x', do_some_math(-794, aspect_ratio))
+        patch_blyt('GameLevelHUD_00', 'P_BorderL', 'shift_x', -2500)
+        patch_blyt('GameLevelHUD_00', 'P_BorderR', 'shift_x', 2500)
+        patch_blyt('GameLevelHUD_00', 'L_Lives', 'shift_x', do_some_math(112, aspect_ratio))
+        patch_blyt('GameLevelHUD_00', 'N_Block_T', 'shift_x', do_some_math(-90, aspect_ratio))
+        patch_blyt('GameLevelHUD_00', 'N_Block_Y', 'shift_x', do_some_math(90, aspect_ratio))
+        patch_blyt('GameLevelHUD_00', 'N_DK', 'shift_x', do_some_math(-165, aspect_ratio))
+        patch_blyt('GameLevelHUD_00', 'N_TimeAttack', 'scale_x', 1/s1)
+        patch_blyt('GameLevelHUD_00', 'N_TA_Timer', 'scale_x', s1)
+        patch_blyt('GameLevelHUD_00', 'N_TA_Timer', 'shift_x', do_some_math(487, aspect_ratio))
+        patch_blyt('GameLevelHUD_00', 'N_Time', 'shift_x', do_some_math(-20, aspect_ratio))
+        patch_blyt('GameLevelHUD_00', 'N_Collectible', 'shift_x', do_some_math(165, aspect_ratio))
+        patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
+        patch_blyt('Cutscene_Skip', 'L_Skip_00', 'shift_x', do_some_math(710, aspect_ratio))
+        patch_blyt('CongratsScreen', 'P_Logo', 'shift_x', do_some_math(840, aspect_ratio))
+        patch_blyt('GameMainMenu_00', 'P_BlackPanel', 'scale_x', 1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_BG_Gray', 'scale_x', 1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_x', do_some_math(-480, aspect_ratio))
+        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(480, aspect_ratio))
+        patch_blyt('PaFooter_00', 'P_Backing', 'scale_x', 1/s1)
+        patch_blyt('PaFooter_00', 'P_Shadow', 'scale_x', 1/s1)
+        patch_blyt('WorldIntro', 'P_BorderBot', 'scale_x', 1/s1)
+        patch_blyt('WorldIntro', 'P_BorderTop', 'scale_x', 1/s1)
+        patch_blyt('WorldIntro', 'P_Fade', 'scale_x', 1/s1)
+        patch_blyt('WorldIntro', 'P_Icon_00', 'shift_x', do_some_math(-802, aspect_ratio))
+        patch_blyt('WorldIntro', 'T_WorldName_00', 'shift_x', do_some_math(-794, aspect_ratio))
+        patch_blyt('PaMenu_Btn_Slot', 'P_Highlight', 'scale_x', 1/s1)
 
+        # patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', 1/s1) #Mario Bubble
+        # patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', 1/s1) #Toad Bubble
+        
 
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
 
-            
+
+        # To mirror an object, do -x scale, and 180 roate y. For example, if we want to mirror something that is 
+
     else:
         s1 = aspect_ratio / (16/9)
         s2 = 1-s1
