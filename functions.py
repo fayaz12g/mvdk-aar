@@ -43,3 +43,10 @@ def do_some_math(num, ratio):
     num = int(num)
     ratio = int(ratio)
     return ((num/(16/9))*(21/9))
+
+
+def do_special_math(num, ratio):
+    num = int(num)
+    ratio = int(ratio)
+    newnum = do_some_math(num, ratio)
+    return ((newnum*-1)+num)
