@@ -39,18 +39,20 @@ def mvdk_hex23(num):
 def float2hex(f):
         return hex(struct.unpack('>I', struct.pack('<f', f))[0]).lstrip('0x').rjust(8,'0').upper()
 
+# This one finds the correct translation in correleation to the aspect ratio
 def do_some_math(num, ratio):
     num = int(num)
     ratio = int(ratio)
     return ((num/(16/9))*(21/9))
 
-
+# This one finds the inverse value from the middle of the pane
 def do_special_math(num, ratio):
     num = int(num)
     ratio = int(ratio)
     newnum = do_some_math(num, ratio)
     return ((newnum*-1)+num)
 
+# This one is weird, and halfs the translation
 def do_weirder_math(num, ratio):
     num = int(num)
     ratio = int(ratio)
@@ -58,6 +60,7 @@ def do_weirder_math(num, ratio):
     newernum = (abs(newnum) - abs(num))/2
     return (newernum+newnum)
 
+# This one moves the element the same amount Mario Lives is moved
 def do_specific_math(num, ratio):
     num = int(num)
     ratio = int(ratio)
