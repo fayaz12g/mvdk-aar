@@ -121,6 +121,12 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         patch_blyt('WorldIntro', 'P_Fade', 'scale_x', 1/s1)
         patch_blyt('WorldIntro', 'P_Icon_00', 'shift_x', do_some_math(-802, aspect_ratio))
         patch_blyt('WorldIntro', 'T_WorldName_00', 'shift_x', do_some_math(-794, aspect_ratio))
+        patch_blyt('PaFooter_00', 'L_Select_01', 'shift_x', do_some_math(223.96, aspect_ratio))
+        patch_blyt('PaFooter_00', 'L_ButtonB_01', 'shift_x', do_some_math(409.02, aspect_ratio))
+        patch_blyt('PaFooter_00', 'L_ButtonX_01', 'shift_x', do_some_math(-645.74, aspect_ratio))
+        patch_blyt('PaFooter_00', 'L_ButtonA_01', 'shift_x', do_some_math(779.14, aspect_ratio))
+        patch_blyt('PaFooter_00', 'L_Special_00', 'shift_x', do_some_math(-830.79, aspect_ratio))
+        patch_blyt('PaFooter_00', 'L_ButtonX_00', 'shift_x', do_some_math(-645.74, aspect_ratio))
         # patch_blyt('PaMenu_Btn_Slot', 'P_Highlight', 'scale_x', 1/s1)
 
         # patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', 1/s1) #Mario Bubble
@@ -191,6 +197,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         patch_blyt('WorldIntro', 'N_TopArea', 'scale_y', do_some_math(20, aspect_ratio))
         patch_blyt('WorldIntro', 'L_Zipper_00', 'scale_y', do_some_math(-420, aspect_ratio))
         patch_blyt('WorldIntro', 'P_Icon_00', 'shift_y', do_some_math(-802, aspect_ratio))
+        patch_blyt('PaFooter_00', 'N_null_00', 'shift_y', do_some_math(-495, aspect_ratio))
         # patch_blyt('PaMenu_Btn_Slot', 'P_Highlight', 'scale_y', 1/s1)
 
         # if HUD_pos == 'corner':
