@@ -57,3 +57,11 @@ def do_weirder_math(num, ratio):
     newnum = do_some_math(num, ratio)
     newernum = (abs(newnum) - abs(num))/2
     return (newernum+newnum)
+
+def do_specific_math(num, ratio):
+    num = int(num)
+    ratio = int(ratio)
+    lives = int(651)
+    newnum = do_some_math(lives, ratio)
+    newernum = (abs(newnum) - lives)
+    return (newernum+num)
