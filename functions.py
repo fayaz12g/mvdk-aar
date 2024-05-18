@@ -50,3 +50,10 @@ def do_special_math(num, ratio):
     ratio = int(ratio)
     newnum = do_some_math(num, ratio)
     return ((newnum*-1)+num)
+
+def do_weirder_math(num, ratio):
+    num = int(num)
+    ratio = int(ratio)
+    newnum = do_some_math(num, ratio)
+    newernum = (abs(newnum) - abs(num))/2
+    return (newernum+newnum)
