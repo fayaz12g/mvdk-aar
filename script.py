@@ -191,7 +191,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         patch_blyt('WorldIntro', 'N_TopArea', 'scale_y', do_some_math(20, aspect_ratio))
         patch_blyt('WorldIntro', 'L_Zipper_00', 'scale_y', do_some_math(-420, aspect_ratio))
         patch_blyt('WorldIntro', 'P_Icon_00', 'shift_y', do_some_math(-802, aspect_ratio))
-        patch_blyt('PaMenu_Btn_Slot', 'P_Highlight', 'scale_y', 1/s1)
+        # patch_blyt('PaMenu_Btn_Slot', 'P_Highlight', 'scale_y', 1/s1)
 
         # if HUD_pos == 'corner':
         #     print("Shifitng elements for corner HUD")
