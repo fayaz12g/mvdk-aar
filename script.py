@@ -10,6 +10,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
 
     file_paths = {}
 
+    broken_names = ["PaMenu_Btn_Level", "PaMenu_Btn_Slot"]
     def patch_blyt(filename, pane, operation, value):
         if operation == "scale_x" or operation == "scale_y":
             if value < 1:
@@ -24,7 +25,10 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         print(f"{command} {pane} of {filename}")
         offset_dict = {'shift_x': 0x40, 'shift_y': 0x48, 'scale_x': 0x70, 'scale_y': 0x78} 
         modified_name = filename + "_name"
-        full_path_of_file = file_paths.get(modified_name)
+        if filename in broken_names:
+            full_path_of_file = os.path.join(unpacked_folder, "Layout", "{filename}.Nin_NX_NVN", "blyt", "{filename}.bflyt")
+        else:
+            full_path_of_file = file_paths.get(modified_name)
         with open(full_path_of_file, 'rb') as f:
             content = f.read().hex()
         start_rootpane = content.index(b'RootPane'.hex())
@@ -135,11 +139,24 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         patch_blyt('PaFooter_00', 'L_ButtonA_01', 'scale_x', s1)
         patch_blyt('PaFooter_00', 'L_Special_00', 'scale_x', s1)
         patch_blyt('PaFooter_00', 'L_ButtonX_00', 'scale_x', s1)
-        # patch_blyt('PaMenu_Btn_Slot', 'P_Highlight', 'scale_x', 1/s1)
+        patch_blyt('PaMenu_Btn_Slot', 'P_Highlight', 'scale_x', 1/s1)
 
         # patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', 1/s1) #Mario Bubble
         # patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', 1/s1) #Toad Bubble
-        
+
+        # Expiremental Changes, Expands the Level Select Window to be wider so the UI on the sides doesn't look empty (space to L+R)!
+        patch_blyt('GameLevelSelect_00', 'T_ArrowR_00', 'shift_x', do_specific_math(805, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'P_ArrowR_00', 'shift_x', do_specific_math(840, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'T_ArrowL_00', 'shift_x', do_specific_math(-805, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'P_ArrowL_00', 'shift_x', do_specific_math(-840, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'L_Levels_P0', 'shift_x', do_specific_math(-3266, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'L_Levels_P1', 'shift_x', do_specific_math(-1648, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'L_Levels', 'scale_x', 1/s1)
+        patch_blyt('GameLevelSelect_00', 'L_Levels_N1', 'shift_x', do_specific_math(3266, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'L_Levels_N0', 'shift_x', do_specific_math(1648, aspect_ratio))
+        patch_blyt('PaMenu_Btn_Level', 'RootPane', 'scale_x', 1/s1)
+
+
 
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
