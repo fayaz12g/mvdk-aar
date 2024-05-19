@@ -165,7 +165,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('PaFooter_00', 'L_ButtonA_01', 'scale_x', s1)
         patch_blyt('PaFooter_00', 'L_Special_00', 'scale_x', s1)
         patch_blyt('PaFooter_00', 'L_ButtonX_00', 'scale_x', s1)
-        patch_blyt('PaMenu_Btn_Slot', 'P_Highlight', 'scale_x', 1/s1)
+        patch_blyt('PaMenu_Btn_Slot', 'N_Body', 'scale_x', s1)
 
         patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', s1) #Mario Bubble
         patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', s1) #Toad Bubble
