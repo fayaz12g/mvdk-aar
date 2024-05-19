@@ -60,6 +60,7 @@ do_disable_dynamicres = BooleanVar(value=True)
 do_disable_dof = BooleanVar(value=True)
 do_disable_bloom = BooleanVar(value=True)
 do_screenshot = BooleanVar(value=True)
+do_expirements = BooleanVar(value=False)
 
 
 # Legacy Visuals
@@ -288,52 +289,52 @@ def select_mario_folder():
         print("Center HUD")
         HUD_pos = "center"
 
-    ##################
-    ## Pre-Cleaning ##
-    ##################
+    # ##################
+    # ## Pre-Cleaning ##
+    # ##################
 
-    if os.path.exists(text_folder):
-        shutil.rmtree(text_folder)
+    # if os.path.exists(text_folder):
+    #     shutil.rmtree(text_folder)
 
-    #################
-    ## Downloading ##
-    #################
+    # #################
+    # ## Downloading ##
+    # #################
 
-    download_extract_copy(input_folder, mod_name)
+    # download_extract_copy(input_folder, mod_name)
 
-    # Create the PCHTXT Files
-    visual_fixes = create_visuals(do_screenshot.get(), do_disable_fxaa.get(), do_disable_dynamicres.get())
-    create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes, do_disable_bloom.get())
+    # # Create the PCHTXT Files
+    # visual_fixes = create_visuals(do_screenshot.get(), do_disable_fxaa.get(), do_disable_dynamicres.get())
+    # create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes, do_disable_bloom.get())
 
-    #################
-    # ZS Extraction #
-    #################
+    # #################
+    # # ZS Extraction #
+    # #################
 
-    for root, _, files in os.walk(romfs_folder):
-        for file in files:
-            if file.lower().endswith(".zs"):
-                file_path = os.path.join(root, file)
-                print(f"Extracting {file}.")
-                decompress_zstd(file_path)
-                os.remove(file_path)
+    # for root, _, files in os.walk(romfs_folder):
+    #     for file in files:
+    #         if file.lower().endswith(".zs"):
+    #             file_path = os.path.join(root, file)
+    #             print(f"Extracting {file}.")
+    #             decompress_zstd(file_path)
+    #             os.remove(file_path)
 
-    ####################
-    # BLARC Extraction #
-    ####################
+    # ####################
+    # # BLARC Extraction #
+    # ####################
 
-    for root, _, files in os.walk(romfs_folder):
-        for file in files:
-            if file.lower().endswith(".blarc"):
-                file_path = os.path.join(root, file)
-                print(f"Extracting {file}.")
-                extract_blarc(file_path)
-                os.remove(file_path)
+    # for root, _, files in os.walk(romfs_folder):
+    #     for file in files:
+    #         if file.lower().endswith(".blarc"):
+    #             file_path = os.path.join(root, file)
+    #             print(f"Extracting {file}.")
+    #             extract_blarc(file_path)
+    #             os.remove(file_path)
                 
     ###########################
     # Perform Pane Strecthing #
     ###########################
 
-    patch_blarc(str(ratio_value), HUD_pos, romfs_folder)
+    patch_blarc(str(ratio_value), HUD_pos, romfs_folder, do_expirements.get())
 
     
     ##########################
@@ -385,6 +386,7 @@ def pack_widgets():
     dynamicres_checkbox.pack(padx=10, pady=10)
     # dof_checkbox.pack(padx=10, pady=10)
     bloom_checkbox.pack(padx=10, pady=10)
+    expirement_checkbox.pack(padx=10, pady=10)
     
     image_label.pack()
 
@@ -450,6 +452,7 @@ def forget_packing():
     dynamicres_checkbox.pack_forget()
     # dof_checkbox.pack_forget()
     bloom_checkbox.pack_forget()
+    expirement_checkbox.pack_forget()
 
     image_label.pack_forget()
     image_layout_label.pack_forget()
@@ -530,6 +533,7 @@ screenshot_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), 
 dynamicres_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="2880x1620 Docked", variable=do_disable_dynamicres)
 dof_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Depth of Field (DOF)", variable=do_disable_dof)
 bloom_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Ultrawide Camera", variable=do_disable_bloom)
+expirement_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Expiremental Menu", variable=do_expirements)
 
 ##########################
 ####### Controller #######
