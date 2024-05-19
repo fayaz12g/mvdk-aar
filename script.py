@@ -26,7 +26,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         print(f"{command} {pane} of {filename}")
         offset_dict = {'shift_x': 0x40, 'shift_y': 0x48, 'scale_x': 0x70, 'scale_y': 0x78} 
         modified_name = filename + "_name"
-        if filename in broken_names:
+        if not file_paths.get(modified_name):
             full_path_of_file = os.path.join(unpacked_folder, "Layout", f"{filename}.Nin_NX_NVN", "blyt", f"{filename}.bflyt")
         else:
             full_path_of_file = file_paths.get(modified_name)
@@ -123,8 +123,10 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameSplashScreen_00', 'P_BG_Stars', 'scale_y', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Gradient', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Gradient', 'scale_y', 1/s1)
-        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_x', do_some_math(-580, aspect_ratio))
-        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(580, aspect_ratio))
+        patch_blyt('GameSplashScreen_00', 'P_BG_WhiteBackground', 'scale_x', 1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_BG_WhiteBackground', 'scale_y', 1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_x', do_some_math(-600, aspect_ratio))
+        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(600, aspect_ratio))
         patch_blyt('PaFooter_00', 'P_Backing', 'scale_x', 1/s1)
         patch_blyt('PaFooter_00', 'P_Shadow', 'scale_x', 1/s1)
         patch_blyt('WorldIntro', 'P_BorderBot', 'scale_x', 1/s1)
