@@ -53,9 +53,9 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
     
-    do_not_scale_rootpane = ["Loading_00", "Saving_00", "Pa_LoadingBlocks_00", "SceneChangeFade_00", "MenuBackground_00", "Pa_BlurBackground", "Footer_00"]
+    do_not_scale_rootpane = ["PaMenu_Btn_Slot", "PaMenu_Btn_Misc", "PaButton_Generic", "Loading_00", "Saving_00", "Pa_LoadingBlocks_00", "SceneChangeFade_00", "MenuBackground_00", "Pa_BlurBackground", "Footer_00"]
    
-    rootpane_by_y = ["MenuBackground_00", "Loading_00", "SceneChangeFade_00"]
+    rootpane_by_y = ["MenuBackground_00", "Loading_00", "SceneChangeFade_00", "Saving_00", "Pa_LoadingBlocks_00"]
 
     for root, dirs, files in os.walk(blyt_folder):
         for file_name in files:
@@ -89,11 +89,11 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         # patch_blyt('WorldLayout', 'N_Base', 'scale_x', s1)
         patch_blyt('GameLevelWin_00', 'A_alignment_00', 'shift_x', do_special_math(-450, aspect_ratio))
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
-        patch_blyt('GameLevelPauseMenu_00', 'L_Window_00', 'scale_x', 1/s1)
+        patch_blyt('GameLevelPauseMenu_00', 'L_Window_00', 'scale_x', s1)
         # patch_blyt('GameLevelPauseMenu_00', 'A_alignment_00', 'scale_x', s1)
         # patch_blyt('GameLevelPauseMenu_00', 'A_Align', 'scale_x', s1)
         patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
-        patch_blyt('GameLevelPauseMenu_00', 'L_Lives', 'shift_x', do_some_math(-450, aspect_ratio))
+        patch_blyt('GameLevelPauseMenu_00', 'L_Lives', 'shift_x', do_special_math(120, aspect_ratio))
         patch_blyt('GameModeChoice_00', 'P_BG', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_Background', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'L_Blur', 'scale_x', 1/s1)
