@@ -7,6 +7,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
     aspect_ratio = float(aspect_ratio)
     print(f"Aspect ratio is {aspect_ratio}")
     HUD_pos = str(HUD_pos)
+    # expiremental_menu = eval(expiremental_menu)
 
     file_paths = {}
 
@@ -145,6 +146,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         # patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', 1/s1) #Toad Bubble
 
         if expiremental_menu:
+            print("Doing Expirements!")
             # Expiremental Changes, Expands the Level Select Window to be wider so the UI on the sides doesn't look empty (space to L+R)!
             patch_blyt('GameLevelSelect_00', 'T_ArrowR_00', 'shift_x', do_specific_math(805, aspect_ratio))
             patch_blyt('GameLevelSelect_00', 'P_ArrowR_00', 'shift_x', do_specific_math(840, aspect_ratio))
