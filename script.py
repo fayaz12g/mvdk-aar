@@ -122,7 +122,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelHUD_00', 'N_Time', 'shift_x', do_some_math(165, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'N_Collectable', 'shift_x', do_special_math(120, aspect_ratio))
         patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
-        # patch_blyt('Cutscene_Skip', 'L_Skip_00', 'shift_x', do_some_math(710, aspect_ratio))
+        patch_blyt('Cutscene_Skip', 'L_Skip_00', 'shift_x', do_some_math(710, aspect_ratio))
         patch_blyt('CongratsScreen', 'P_Logo', 'shift_x', do_some_math(840, aspect_ratio))
         patch_blyt('GameMainMenu_00', 'P_BlackPanel', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Gray', 'scale_x', 1.5/s1)
