@@ -53,7 +53,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
     
-    do_not_scale_rootpane = ["PaMenu_Btn_Slot", "PaMenu_Btn_Misc", "PaButton_Generic", "Loading_00", "Saving_00", "Pa_LoadingBlocks_00", "SceneChangeFade_00", "MenuBackground_00", "Pa_BlurBackground", "Footer_00"]
+    do_not_scale_rootpane = ["PaMenu_Cursor", "PaMenu_Btn_Slot", "PaMenu_Btn_Misc", "PaButton_Generic", "Loading_00", "Saving_00", "Pa_LoadingBlocks_00", "SceneChangeFade_00", "MenuBackground_00", "Pa_BlurBackground", "Footer_00"]
    
     rootpane_by_y = ["MenuBackground_00", "Loading_00", "SceneChangeFade_00", "Saving_00", "Pa_LoadingBlocks_00"]
 
@@ -166,6 +166,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('PaFooter_00', 'L_Special_00', 'scale_x', s1)
         patch_blyt('PaFooter_00', 'L_ButtonX_00', 'scale_x', s1)
         patch_blyt('PaMenu_Btn_Slot', 'RootPane', 'scale_x', s1)
+        patch_blyt('PaMenu_Btn_Slot', 'N_Cursor', 'scale_x', s1)
+        patch_blyt('PaMenu_Btn_Slot', 'B_Hit_00', 'scale_x', s1)
         patch_blyt('GameModeChoice_00', 'L_Blur', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_BGWhite', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_Background', 'scale_x', 1/s1)
@@ -175,13 +177,13 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('PaButton_Generic', 'P_main', 'scale_x', s1)
         patch_blyt('PaButton_Generic', 'N_Cursor', 'scale_x', 1/s1)
         patch_blyt('PaButton_Generic', 'B_Hit', 'scale_x', 1/s1)
-        patch_blyt('PaButton_Generic_Numeric', 'P_main', 'scale_x', s1)
+        patch_blyt('PaButton_Generic_Numeric', 'P_mainShape', 'scale_x', s1)
         patch_blyt('PaButton_Generic_Numeric', 'N_Cursor', 'scale_x', 1/s1)
         patch_blyt('PaButton_Generic_Numeric', 'B_Hit', 'scale_x', 1/s1)
-        patch_blyt('Pa_GalleryCinemaViewerWindow', 'A_Align', 'scale_x', s1)
-        patch_blyt('Pa_GalleryCinemaViewerWindow', 'A_Align_00', 'scale_x', s1)
-        patch_blyt('Pa_GalleryAudioListenerWindow', 'L_MusicButton', 'scale_x', s1)
-        patch_blyt('Pa_GalleryAudioListenerWindow', 'L_SE_Button', 'scale_x', s1)
+        # patch_blyt('Pa_GalleryCinemaViewerWindow', 'A_Align', 'scale_x', s1)
+        # patch_blyt('Pa_GalleryCinemaViewerWindow', 'A_Align_00', 'scale_x', s1)
+        # patch_blyt('Pa_GalleryAudioListenerWindow', 'L_MusicButton', 'scale_x', s1)
+        # patch_blyt('Pa_GalleryAudioListenerWindow', 'L_SE_Button', 'scale_x', s1)
 
 
           
