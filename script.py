@@ -175,6 +175,14 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('PaButton_Generic', 'P_main', 'scale_x', s1)
         patch_blyt('PaButton_Generic', 'N_Cursor', 'scale_x', 1/s1)
         patch_blyt('PaButton_Generic', 'B_Hit', 'scale_x', 1/s1)
+        patch_blyt('PaButton_Generic_Numeric', 'P_main', 'scale_x', s1)
+        patch_blyt('PaButton_Generic_Numeric', 'N_Cursor', 'scale_x', 1/s1)
+        patch_blyt('PaButton_Generic_Numeric', 'B_Hit', 'scale_x', 1/s1)
+        patch_blyt('Pa_GalleryCinemaViewerWindow', 'A_Align', 'scale_x', s1)
+        patch_blyt('Pa_GalleryCinemaViewerWindow', 'A_Align_00', 'scale_x', s1)
+        patch_blyt('Pa_GalleryAudioListenerWindow', 'L_MusicButton', 'scale_x', s1)
+        patch_blyt('Pa_GalleryAudioListenerWindow', 'L_SE_Button', 'scale_x', s1)
+
 
           
 
