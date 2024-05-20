@@ -171,7 +171,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameModeChoice_00', 'P_Background', 'scale_x', 1/s1)
         patch_blyt('PaMenu_Generic', 'P_main', 'scale_x', s1)
         patch_blyt('PaMenu_Generic', 'P_bg_white', 'scale_x', 1/s1)
-        patch_blyt('ActionGuideMenu', 'N_Background', 'scale_x', 1/s1)
+        patch_blyt('ActionGuideMenu_00', 'N_Background', 'scale_x', 1/s1)
         patch_blyt('PaButton_Generic', 'P_main', 'scale_x', s1)
         patch_blyt('PaButton_Generic', 'N_Cursor', 'scale_x', 1/s1)
         patch_blyt('PaButton_Generic', 'B_Hit', 'scale_x', 1/s1)
