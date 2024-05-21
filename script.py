@@ -299,7 +299,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
         patch_blyt('GameOver_00', 'N_Buttons', 'scale_x', 1/s1)
 
-        patch_blyt('LevelIntro_00', 'N_Body', 'scale_x', s1)
+        patch_blyt('LevelIntro_00', 'N_Body', 'scale_x', 1/s1)
 
         # patch_blyt('PaMenu_Cursor', 'N_LT_00', 'shift_x', -100)
         # patch_blyt('PaMenu_Cursor', 'N_LD_00', 'shift_x', -100)
