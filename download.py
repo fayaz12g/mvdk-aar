@@ -59,9 +59,9 @@ def download_extract_copy(input_folder, mod_name):
     if not os.path.isfile(zip3_file_source):
         # Download the ZIP file
         print("Downloading zip file. This may take up to 10 seconds.")
-        response = requests.get(zip2_url)
+        response = requests.get(zip3_url)
         print("Zip file downloaded.")
-        with open(zip2_file_source, "wb") as file:
+        with open(zip3_file_source, "wb") as file:
             print("Writing contents to temp folder.")
             file.write(response.content)
 
