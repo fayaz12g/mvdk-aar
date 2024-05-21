@@ -141,8 +141,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
 
-        patch_blyt('PaCamera_00', 'W_Border_1P', 'scale_x', 1/s1)
-        patch_blyt('PaCamera_00', 'W_Border_2P', 'scale_x', 1/s1)
+        patch_blyt('PaCamera_00', 'W_Border_1P', 'scale_x', 1)
+        patch_blyt('PaCamera_00', 'W_Border_2P', 'scale_x', 1)
 
         patch_blyt('PaCamera_00', 'T_1P_Text', 'shift_x', do_some_math(584, aspect_ratio))
         patch_blyt('PaCamera_00', 'P_RightArrow_1P', 'shift_x', do_some_math(600, aspect_ratio))
