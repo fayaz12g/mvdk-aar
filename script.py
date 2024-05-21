@@ -103,7 +103,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         # patch_blyt('WorldLayout', 'N_Base', 'scale_x', s1)
         patch_blyt('GameLevelWin_00', 'A_alignment_00', 'shift_x', do_special_math(-450, aspect_ratio))
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
-        # patch_blyt('GameLevelPauseMenu_00', 'L_Window_00', 'scale_x', 1/s1)
+        patch_blyt('GameLevelPauseMenu_00', 'L_Window_00', 'scale_x', 1/s1)
         # patch_blyt('GameLevelPauseMenu_00', 'A_alignment_00', 'scale_x', s1)
         # patch_blyt('GameLevelPauseMenu_00', 'A_Align', 'scale_x', s1)
         # patch_blyt('GameLevelPauseMenu_00', 'A_Buttons', 'scale_x', s1)
@@ -134,7 +134,11 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelSelect_00', 'T_WorldName_00', 'shift_x', do_some_math(-794, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'P_BorderL', 'shift_x', -2500)
         patch_blyt('GameLevelHUD_00', 'P_BorderR', 'shift_x', 2500)
-        patch_blyt('GameLevelHUD_00', 'L_Lives', 'shift_x', do_special_math(120, aspect_ratio))
+
+        # This is a TEST
+        # patch_blyt('GameLevelHUD_00', 'L_Lives', 'shift_x', do_special_math(120, aspect_ratio))
+        patch_blyt('GameLevelHUD_00', 'L_Lives', 'shift_x', do_some_math(-120, aspect_ratio))
+        
         patch_blyt('GameLevelHUD_00', 'N_Block_T', 'shift_x', do_some_math(-90, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'N_Block_Y', 'shift_x', do_some_math(90, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'N_DK', 'shift_x', do_special_math(-165, aspect_ratio))
@@ -194,9 +198,12 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameModeChoice_00', 'L_Blur', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_BGWhite', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_Background', 'scale_x', 1/s1)
-        patch_blyt('PaMenu_Generic', 'N_Window_shape', 'scale_x', s1)
-        patch_blyt('PaMenu_Generic', 'P_bg_white', 'scale_x', 1/s1)
+
+        # Controls menu items
+        # patch_blyt('PaMenu_Generic', 'N_Window_shape', 'scale_x', 1/s1)
+        # patch_blyt('PaMenu_Generic', 'P_bg_white', 'scale_x', 1/s1)
         # patch_blyt('PaMenu_Generic', 'N_GenericWindow', 'scale_x', s1)
+
         patch_blyt('ActionGuideMenu_00', 'N_Background', 'scale_x', 1/s1)
         patch_blyt('PaButton_Generic', 'P_main', 'scale_x', s1)
         patch_blyt('PaButton_Generic', 'N_Cursor', 'scale_x', 1/s1)
