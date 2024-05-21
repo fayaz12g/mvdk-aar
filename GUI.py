@@ -311,6 +311,7 @@ def select_mario_folder():
     #################
 
     for root, _, files in os.walk(romfs_folder):
+        dirs[:] = [d for d in dirs if d != "Mals"]
         for file in files:
             if file.lower().endswith(".zs"):
                 file_path = os.path.join(root, file)
