@@ -67,7 +67,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
     # Add the AAR Tag on the splash before scaling
     splash1 = os.path.join(unpacked_folder, "Layout", f"GameSplashScreen_00.Nin_NX_NVN", "blyt", f"GameSplashScreen_00.bflyt")
-    splash2 = os.path.join(unpacked_folder, "Layout", f"Menu.Product.100.Nin_NX_NVN.Nin_NX_NVN", "blyt", f"GameSplashScreen_00.bflyt")
+    splash2 = os.path.join(unpacked_folder, "Layout", f"Menu.Product.100.Nin_NX_NVN", "blyt", f"GameSplashScreen_00.bflyt")
     add_aar_tag(splash1)
     add_aar_tag(splash2)
 

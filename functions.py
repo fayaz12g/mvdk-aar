@@ -80,3 +80,4 @@ def add_aar_tag(file_path):
     
     with open(file_path, 'wb') as file:
         file.write(new_data)
+    print("Added AAR Splash")
