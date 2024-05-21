@@ -73,7 +73,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
             
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     
-    do_not_scale_rootpane = ["PaMenu_Cursor", "PaMenu_Btn_Slot", "PaMenu_Btn_Misc", "PaButton_Generic", "Loading_00", "Saving_00", "Pa_LoadingBlocks_00", "SceneChangeFade_00", "MenuBackground_00", "Pa_BlurBackground", "Footer_00"]
+    do_not_scale_rootpane = ["LevelIntro_00", "PaMenu_Cursor", "PaMenu_Btn_Slot", "PaMenu_Btn_Misc", "PaButton_Generic", "Loading_00", "Saving_00", "Pa_LoadingBlocks_00", "SceneChangeFade_00", "MenuBackground_00", "Pa_BlurBackground", "Footer_00"]
    
     rootpane_by_y = ["MenuBackground_00", "Loading_00", "SceneChangeFade_00", "Saving_00", "Pa_LoadingBlocks_00"]
 
@@ -140,6 +140,19 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelWin_00', 'L_World', 'shift_x', do_some_math(-200, aspect_ratio))
 
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
+
+        patch_blyt('PaCamera_00', 'W_Border_1P', 'scale_x', 1/s1)
+        patch_blyt('PaCamera_00', 'W_Border_2P', 'scale_x', 1/s1)
+
+        patch_blyt('PaCamera_00', 'T_1P_Text', 'shift_x', do_some_math(584, aspect_ratio))
+        patch_blyt('PaCamera_00', 'P_RightArrow_1P', 'shift_x', do_some_math(600, aspect_ratio))
+        patch_blyt('PaCamera_00', 'P_LeftArrow_1P', 'shift_x', do_some_math(-600, aspect_ratio))
+        patch_blyt('PaCamera_00', 'P_camera_1P', 'shift_x', do_some_math(580, aspect_ratio))
+
+        patch_blyt('PaCamera_00', 'T_2P_Text', 'shift_x', do_some_math(584, aspect_ratio))
+        patch_blyt('PaCamera_00', 'P_RightArrow_2P', 'shift_x', do_some_math(600, aspect_ratio))
+        patch_blyt('PaCamera_00', 'P_LeftArrow_2P', 'shift_x', do_some_math(-600, aspect_ratio))
+        patch_blyt('PaCamera_00', 'P_camera_2P', 'shift_x', do_some_math(580, aspect_ratio))
 
         patch_blyt('GameLevelPauseMenu_00', 'L_Window_00', 'scale_x', 1/s1)
         # patch_blyt('GameLevelPauseMenu_00', 'A_alignment_00', 'scale_x', s1)
@@ -279,14 +292,14 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
         patch_blyt('PaTutorial_00', 'L_Blur', 'scale_x', 1/s1)
 
-        patch_blyt('MiniMarioIndicator', 'RootPane', 'scale_x', s1)
-
         patch_blyt('TimeAttackOutro_00', 'BG', 'scale_x', 1/s1)
 
         patch_blyt('TimeAttackIntro_00', 'BG', 'scale_x', 1/s1)
 
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
-        patch_blyt('GameOver_00', 'N_Buttons', 'scale_x', 1)
+        patch_blyt('GameOver_00', 'N_Buttons', 'scale_x', 1/s1)
+
+        patch_blyt('LevelIntro_00', 'N_Body', 'scale_x', s1)
 
         # patch_blyt('PaMenu_Cursor', 'N_LT_00', 'shift_x', -100)
         # patch_blyt('PaMenu_Cursor', 'N_LD_00', 'shift_x', -100)
@@ -301,8 +314,10 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
 # fix game confimration (controller, exit), timer shift, title DK
 
-        patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', s1) #Mario Bubble
-        patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', s1) #Toad Bubble
+        patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', math.sqrt(s1)) #Mario Bubble
+        patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', math.sqrt(s1)) #Toad Bubble
+        patch_blyt('MiniMarioIndicator', 'RootPane', 'scale_x', math.sqrt(s1))
+        patch_blyt('BarrelIndicator', 'RootPane', 'scale_x', math.sqrt(s1))
 
         if expiremental_menu:
             print("Doing Expirements!")
