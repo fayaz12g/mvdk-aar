@@ -314,6 +314,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
 # TODO
 # fix game confimration (controller, exit)
+# Fix indicators!!! Mini mario, player 1 and 2
 
         patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', s1/2) #Mario Bubble
         patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', s1/2) #Toad Bubble
