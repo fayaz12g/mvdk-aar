@@ -56,7 +56,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         paths = anim_file_paths.get(modified_name, [])
         if not paths:
             # If no paths are found, create a default path and add it to the list
-            default_path = os.path.join(unpacked_folder, "Layout", f"{source}.Nin_NX_NVN", "anim", f"{filename}.bflyt")
+            default_path = os.path.join(unpacked_folder, "Layout", f"{source}.Nin_NX_NVN", "anim", f"{filename}.bflan")
             paths.append(default_path)
         
         # Iterate over each path and patch the corresponding file
