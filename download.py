@@ -9,6 +9,7 @@ def download_extract_copy(input_folder, mod_name):
     # URL of the ZIP file
     zip_url = "https://github.com/fayaz12g/aar-files/raw/main/mvdk/UI.zip"
     zip2_url = "https://github.com/fayaz12g/aar-files/raw/main/mvdk/Layout.zip"
+    zip3_url = "https://github.com/fayaz12g/aar-files/raw/main/mvdk/Mals.zip"
 
     username = getpass.getuser()
     directory_path = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/mvdk"
@@ -22,6 +23,8 @@ def download_extract_copy(input_folder, mod_name):
     perm_folder = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/mvdk"
     zip_file_source = os.path.join(perm_folder, "UI.zip")
     zip2_file_source = os.path.join(perm_folder, "Layout.zip")
+    zip3_file_source = os.path.join(perm_folder, "Mals.zip")
+    
 
     if not os.path.isfile(zip_file_source):
         # Download the ZIP file
@@ -53,14 +56,31 @@ def download_extract_copy(input_folder, mod_name):
     with zipfile.ZipFile(zip2_file_source, "r") as zip_ref:
         zip_ref.extractall(extract2_folder)
 
+    if not os.path.isfile(zip3_file_source):
+        # Download the ZIP file
+        print("Downloading zip file. This may take up to 10 seconds.")
+        response = requests.get(zip2_url)
+        print("Zip file downloaded.")
+        with open(zip2_file_source, "wb") as file:
+            print("Writing contents to temp folder.")
+            file.write(response.content)
+
+    # Extract the ZIP file
+    extract3_folder = os.path.join(input_folder, mod_name, "temp3")
+    print(f"Extracting zip to {extract3_folder}. This can also take a few seconds.")
+    with zipfile.ZipFile(zip3_file_source, "r") as zip_ref:
+        zip_ref.extractall(extract3_folder)
+
 
     # Copy the extracted file
     print("Copying extracted files")
     romfs_folder = os.path.join(input_folder, mod_name, "romfs")
     extracted_folder = os.path.join(extract_folder)
     extracted2_folder = os.path.join(extract2_folder)
+    extracted3_folder = os.path.join(extract3_folder)
     dst_folder_path = os.path.join(romfs_folder, "UI")
     dst2_folder_path = os.path.join(romfs_folder, "Layout")
+    dst3_folder_path = os.path.join(romfs_folder, "Mals")
 
     # Remove the existing destination folder if it exists
     if os.path.exists(romfs_folder):
@@ -69,10 +89,13 @@ def download_extract_copy(input_folder, mod_name):
     # Recreate the destination folder and copy the content
     os.makedirs(os.path.dirname(dst_folder_path), exist_ok=True)
     os.makedirs(os.path.dirname(dst2_folder_path), exist_ok=True)
+    os.makedirs(os.path.dirname(dst3_folder_path), exist_ok=True)
     shutil.copytree(extracted_folder, dst_folder_path)
     shutil.copytree(extracted2_folder, dst2_folder_path)
+    shutil.copytree(extracted2_folder, dst3_folder_path)
 
     # Clean up
     print("Cleaning up old files")
     shutil.rmtree(extract_folder)
     shutil.rmtree(extract2_folder)
+    shutil.rmtree(extract3_folder)

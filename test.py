@@ -1,7 +1,7 @@
 import zstandard as zstd
 import os
 
-input_file = r"C:\Users\fayaz\Desktop\og\UI\LayoutArchive\Menu.Product.100.Nin_NX_NVN.blarc"
+input_file = r"C:\Users\fayaz\Desktop\og\Mals\USen.Product.100.sarc"
 
 output_file = f"{input_file}.zs"
 cctx = zstd.ZstdCompressor()
