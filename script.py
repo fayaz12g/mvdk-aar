@@ -301,7 +301,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
             patch_blyt('PaFooter_00', 'L_ButtonX_00', 'shift_x', do_some_math(-645.74, aspect_ratio))
 
             patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_x', do_some_math(-480, aspect_ratio))
-            patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(420, aspect_ratio))
+            patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(450, aspect_ratio))
             # patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_y', do_some_math(200, aspect_ratio))
             # patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(-200, aspect_ratio))
 
