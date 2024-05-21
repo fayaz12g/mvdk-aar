@@ -13,32 +13,40 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
     broken_names = ["PaMenu_Btn_Level", "PaMenu_Btn_Slot"]
     def patch_blyt(filename, pane, operation, value):
-        if operation == "scale_x" or operation == "scale_y":
+        if operation in ["scale_x", "scale_y"]:
             if value < 1:
                 command = "Squishing"
-            if value > 1:
+            elif value > 1:
                 command = "Stretching"
-            if value == 1:
+            else:
                 command = "Ignoring"
-        if operation == "shift_x" or operation == "shift_y":
+        elif operation in ["shift_x", "shift_y"]:
             command = "Shifting"
-
+        
         print(f"{command} {pane} of {filename}")
-        offset_dict = {'shift_x': 0x40, 'shift_y': 0x48, 'scale_x': 0x70, 'scale_y': 0x78} 
+        
+        offset_dict = {'shift_x': 0x40, 'shift_y': 0x48, 'scale_x': 0x70, 'scale_y': 0x78}
         modified_name = filename + "_name"
-        if not file_paths.get(modified_name):
-            full_path_of_file = os.path.join(unpacked_folder, "Layout", f"{filename}.Nin_NX_NVN", "blyt", f"{filename}.bflyt")
-        else:
-            full_path_of_file = file_paths.get(modified_name)
-        with open(full_path_of_file, 'rb') as f:
-            content = f.read().hex()
-        start_rootpane = content.index(b'RootPane'.hex())
-        pane_hex = str(pane).encode('utf-8').hex()
-        start_pane = content.index(pane_hex, start_rootpane)
-        idx = start_pane + offset_dict[operation]
-        content_new = content[:idx] + float2hex(value) + content[idx+8:]
-        with open(full_path_of_file, 'wb') as f:
-            f.write(bytes.fromhex(content_new))
+        
+        # Get all paths for the given filename
+        paths = file_paths.get(modified_name, [])
+        if not paths:
+            # If no paths are found, create a default path and add it to the list
+            default_path = os.path.join(unpacked_folder, "Layout", f"{filename}.Nin_NX_NVN", "blyt", f"{filename}.bflyt")
+            paths.append(default_path)
+        
+        for full_path_of_file in paths:
+            with open(full_path_of_file, 'rb') as f:
+                content = f.read().hex()
+            
+            start_rootpane = content.index(b'RootPane'.hex())
+            pane_hex = str(pane).encode('utf-8').hex()
+            start_pane = content.index(pane_hex, start_rootpane)
+            idx = start_pane + offset_dict[operation]
+            content_new = content[:idx] + float2hex(value) + content[idx+8:]
+            
+            with open(full_path_of_file, 'wb') as f:
+                f.write(bytes.fromhex(content_new))
 
 
     def patch_anim(folder, filename, offset, value):
@@ -53,18 +61,24 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
     
-    do_not_scale_rootpane = ["GameLevelPauseMenu_00", "PaMenu_Cursor", "PaMenu_Btn_Slot", "PaMenu_Btn_Misc", "PaButton_Generic", "Loading_00", "Saving_00", "Pa_LoadingBlocks_00", "SceneChangeFade_00", "MenuBackground_00", "Pa_BlurBackground", "Footer_00"]
+    do_not_scale_rootpane = ["PaMenu_Cursor", "PaMenu_Btn_Slot", "PaMenu_Btn_Misc", "PaButton_Generic", "Loading_00", "Saving_00", "Pa_LoadingBlocks_00", "SceneChangeFade_00", "MenuBackground_00", "Pa_BlurBackground", "Footer_00"]
    
     rootpane_by_y = ["MenuBackground_00", "Loading_00", "SceneChangeFade_00", "Saving_00", "Pa_LoadingBlocks_00"]
+
+    # Initialize a dictionary to store lists of paths
+    file_paths = {}
+    file_names_stripped = []
 
     for root, dirs, files in os.walk(blyt_folder):
         for file_name in files:
             if file_name.endswith(".bflyt"):
-                file_names_stripped.append(file_name.strip(".bflyt"))
                 stripped_name = file_name.strip(".bflyt")
+                file_names_stripped.append(stripped_name)
                 full_path = os.path.join(root, file_name)
                 modified_name = stripped_name + "_name"
-                file_paths[modified_name] = full_path
+                if modified_name not in file_paths:
+                    file_paths[modified_name] = []
+                file_paths[modified_name].append(full_path)
 
     
     if aspect_ratio >= 16/9:
@@ -90,13 +104,13 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelWin_00', 'A_alignment_00', 'shift_x', do_special_math(-450, aspect_ratio))
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
         # patch_blyt('GameLevelPauseMenu_00', 'L_Window_00', 'scale_x', 1/s1)
-        patch_blyt('GameLevelPauseMenu_00', 'A_alignment_00', 'scale_x', s1)
-        patch_blyt('GameLevelPauseMenu_00', 'A_Align', 'scale_x', s1)
-        patch_blyt('GameLevelPauseMenu_00', 'A_Buttons', 'scale_x', s1)
-        patch_blyt('GameLevelPauseMenu_00', 'T_WorldName_00', 'scale_x', s1)
-        patch_blyt('GameLevelPauseMenu_00', 'L_Lives', 'scale_x', s1)
-        patch_blyt('GameLevelPauseMenu_00', 'L_2P_Header', 'scale_x', s1)
-        # patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
+        # patch_blyt('GameLevelPauseMenu_00', 'A_alignment_00', 'scale_x', s1)
+        # patch_blyt('GameLevelPauseMenu_00', 'A_Align', 'scale_x', s1)
+        # patch_blyt('GameLevelPauseMenu_00', 'A_Buttons', 'scale_x', s1)
+        # patch_blyt('GameLevelPauseMenu_00', 'T_WorldName_00', 'scale_x', s1)
+        # patch_blyt('GameLevelPauseMenu_00', 'L_Lives', 'scale_x', s1)
+        # patch_blyt('GameLevelPauseMenu_00', 'L_2P_Header', 'scale_x', s1)
+        patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
         patch_blyt('GameLevelPauseMenu_00', 'L_Lives', 'shift_x', do_some_math(-803, aspect_ratio))
         patch_blyt('GameModeChoice_00', 'P_BG', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_Background', 'scale_x', 1/s1)
@@ -110,10 +124,9 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelSelect_00', 'P_HeaderBG_01', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'P_HeaderBG_02', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'P_HeaderBGShadow_00', 'scale_y', 1/s1)
-        #test
-        # patch_blyt('GameLevelSelect_00', 'L_GameMode', 'shift_x', do_specific_math(1520, aspect_ratio))
-        patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(1520, aspect_ratio))  
-        # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(0, aspect_ratio))
+        patch_blyt('GameLevelSelect_00', 'L_GameMode', 'shift_x', do_specific_math(1520, aspect_ratio))
+        # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(1520, aspect_ratio))  
+        # # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(0, aspect_ratio))
         patch_blyt('GameLevelSelect_00', 'L_StarScore', 'shift_x', do_some_math(799, aspect_ratio))
         patch_blyt('GameLevelSelect_00', 'L_Lives', 'shift_x', do_some_math(651, aspect_ratio))
         # patch_blyt('GameLevelSelect_00', 'L_2P_Header', 'shift_x', do_some_math(710, aspect_ratio))
@@ -181,8 +194,9 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameModeChoice_00', 'L_Blur', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_BGWhite', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_Background', 'scale_x', 1/s1)
-        patch_blyt('PaMenu_Generic', 'P_main', 'scale_x', s1)
+        patch_blyt('PaMenu_Generic', 'N_Window_shape', 'scale_x', s1)
         patch_blyt('PaMenu_Generic', 'P_bg_white', 'scale_x', 1/s1)
+        # patch_blyt('PaMenu_Generic', 'N_GenericWindow', 'scale_x', s1)
         patch_blyt('ActionGuideMenu_00', 'N_Background', 'scale_x', 1/s1)
         patch_blyt('PaButton_Generic', 'P_main', 'scale_x', s1)
         patch_blyt('PaButton_Generic', 'N_Cursor', 'scale_x', 1/s1)
@@ -197,6 +211,10 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('PaMenu_Confirmation', 'P_bg_black', 'scale_x', 1/s1)
         patch_blyt('PaTutorial_00', 'L_Blur', 'scale_x', 1/s1)
         patch_blyt('MiniMarioIndicator', 'RootPane', 'scale_x', s1)
+        patch_blyt('TimeAttackOutro_00', 'BG', 'scale_x', 1/s1)
+        patch_blyt('TimeAttackIntro_00', 'BG', 'scale_x', 1/s1)
+        patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
+        patch_blyt('GameOver_00', 'N_Buttons', 'scale_x', 1)
         # patch_blyt('PaMenu_Cursor', 'N_LT_00', 'shift_x', -100)
         # patch_blyt('PaMenu_Cursor', 'N_LD_00', 'shift_x', -100)
         # patch_blyt('PaMenu_Cursor', 'N_L_00', 'shift_x', -100)
