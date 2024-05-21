@@ -98,11 +98,16 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
                 patch_blyt(name, 'RootPane', 'scale_x', 1)
 
         patch_blyt('Pa_CongratsWorldClearBanner', 'P_Banner', 'scale_x', 1/s1)
+
+
+        # patch_blyt('WorldLayout', 'N_Base', 'scale_x', s1)
+
+        patch_blyt('GameLevelWin_00', 'A_alignment_00', 'shift_x', do_special_math(-450, aspect_ratio))
         # patch_blyt('GameLevelWin_00', 'L_World', 'scale_x', 1/s1)
         patch_blyt('GameLevelWin_00', 'L_World', 'shift_x', do_some_math(-200, aspect_ratio))
-        # patch_blyt('WorldLayout', 'N_Base', 'scale_x', s1)
-        patch_blyt('GameLevelWin_00', 'A_alignment_00', 'shift_x', do_special_math(-450, aspect_ratio))
+
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
+
         patch_blyt('GameLevelPauseMenu_00', 'L_Window_00', 'scale_x', 1/s1)
         # patch_blyt('GameLevelPauseMenu_00', 'A_alignment_00', 'scale_x', s1)
         # patch_blyt('GameLevelPauseMenu_00', 'A_Align', 'scale_x', s1)
@@ -112,9 +117,11 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         # patch_blyt('GameLevelPauseMenu_00', 'L_2P_Header', 'scale_x', s1)
         patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
         patch_blyt('GameLevelPauseMenu_00', 'L_Lives', 'shift_x', do_some_math(-803, aspect_ratio))
+
         patch_blyt('GameModeChoice_00', 'P_BG', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_Background', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'L_Blur', 'scale_x', 1/s1)
+
         patch_blyt('GameLevelSelect_00', 'N_Background', 'scale_x', 1/s1)
         patch_blyt('GameLevelSelect_00', 'P_Cutout', 'scale_x', 1/s1)
         patch_blyt('GameLevelSelect_00', 'P_Cutout', 'scale_y', 1/s1)
@@ -125,13 +132,16 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelSelect_00', 'P_HeaderBG_02', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'P_HeaderBGShadow_00', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'L_GameMode', 'shift_x', do_specific_math(1520, aspect_ratio))
+
         # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(1520, aspect_ratio))  
         # # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(0, aspect_ratio))
+
         patch_blyt('GameLevelSelect_00', 'L_StarScore', 'shift_x', do_some_math(799, aspect_ratio))
         patch_blyt('GameLevelSelect_00', 'L_Lives', 'shift_x', do_some_math(651, aspect_ratio))
         # patch_blyt('GameLevelSelect_00', 'L_2P_Header', 'shift_x', do_some_math(710, aspect_ratio))
         patch_blyt('GameLevelSelect_00', 'P_Icon', 'shift_x', do_some_math(-802, aspect_ratio))
         patch_blyt('GameLevelSelect_00', 'T_WorldName_00', 'shift_x', do_some_math(-794, aspect_ratio))
+
         patch_blyt('GameLevelHUD_00', 'P_BorderL', 'shift_x', -2500)
         patch_blyt('GameLevelHUD_00', 'P_BorderR', 'shift_x', 2500)
 
@@ -147,18 +157,26 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelHUD_00', 'N_TA_Timer', 'shift_x', do_some_math(487, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'N_Time', 'shift_x', do_some_math(165, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'N_Collectable', 'shift_x', do_special_math(120, aspect_ratio))
+
         patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
+
         patch_blyt('Cutscene_Skip', 'RootPane', 'scale_x', s1)
         patch_blyt('Cutscene_Skip', 'L_Skip_00', 'shift_x', do_some_math(710, aspect_ratio))
+
         patch_blyt('CongratsScreen', 'P_Logo', 'shift_x', do_some_math(840, aspect_ratio))
+
         patch_blyt('GameMainMenu_00', 'P_BlackPanel', 'scale_x', 1/s1)
+
         patch_blyt('Pa_ActionGuideHeader', 'P_Header', 'scale_x', 1/s1)
         patch_blyt('Pa_ActionGuideHeader', 'P_Shadow', 'scale_x', 1/s1)
+
         patch_blyt('PaActionGuidePage', 'S_Scissor', 'scale_x', 1/s1)
         patch_blyt('PaActionGuidePage', 'A_Align', 'scale_x', s1)
         patch_blyt('PaActionGuidePage', 'Scrollbar', 'shift_x', do_some_math(898, aspect_ratio))
+
         patch_blyt('Pa_ActionGuideHeader', 'T_ActionGuideText', 'shift_x', do_some_math(-398, aspect_ratio))
         patch_blyt('Pa_ActionGuideHeader', 'N_PS_G', 'shift_x', do_some_math(670, aspect_ratio))
+
         patch_blyt('GameSplashScreen_00', 'P_BG_Gray', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Gray', 'scale_y', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Stars', 'scale_x', 1/s1)
@@ -173,13 +191,16 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_y', 1.05/s1)
         patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_x', do_some_math(-500, aspect_ratio))
         patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(500, aspect_ratio))
+
         patch_blyt('PaFooter_00', 'P_Backing', 'scale_x', 1/s1)
         patch_blyt('PaFooter_00', 'P_Shadow', 'scale_x', 1/s1)
+
         patch_blyt('WorldIntro', 'P_BorderBot', 'scale_x', 1/s1)
         patch_blyt('WorldIntro', 'P_BorderTop', 'scale_x', 1/s1)
         patch_blyt('WorldIntro', 'P_Fade', 'scale_x', 1/s1)
         patch_blyt('WorldIntro', 'P_Icon_00', 'shift_x', do_some_math(-802, aspect_ratio))
         patch_blyt('WorldIntro', 'T_WorldName_00', 'shift_x', do_some_math(-794, aspect_ratio))
+
         patch_blyt('PaFooter_00', 'L_Select_01', 'shift_x', do_some_math(223.96, aspect_ratio))
         patch_blyt('PaFooter_00', 'L_ButtonB_01', 'shift_x', do_some_math(409.02, aspect_ratio))
         patch_blyt('PaFooter_00', 'L_ButtonX_01', 'shift_x', do_some_math(-645.74, aspect_ratio))
@@ -192,9 +213,11 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('PaFooter_00', 'L_ButtonA_01', 'scale_x', s1)
         patch_blyt('PaFooter_00', 'L_Special_00', 'scale_x', s1)
         patch_blyt('PaFooter_00', 'L_ButtonX_00', 'scale_x', s1)
+
         patch_blyt('PaMenu_Btn_Slot', 'RootPane', 'scale_x', s1)
         patch_blyt('PaMenu_Btn_Slot', 'N_Cursor', 'scale_x', s1)
         patch_blyt('PaMenu_Btn_Slot', 'B_Hit_00', 'scale_x', s1)
+
         patch_blyt('GameModeChoice_00', 'L_Blur', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_BGWhite', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_Background', 'scale_x', 1/s1)
@@ -205,24 +228,35 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('PaMenu_Generic', 'N_GenericWindow', 'scale_x', s1)
 
         patch_blyt('ActionGuideMenu_00', 'N_Background', 'scale_x', 1/s1)
+
         patch_blyt('PaButton_Generic', 'P_main', 'scale_x', s1)
         patch_blyt('PaButton_Generic', 'N_Cursor', 'scale_x', 1/s1)
         patch_blyt('PaButton_Generic', 'B_Hit', 'scale_x', 1/s1)
+
         patch_blyt('PaButton_Generic_Numeric', 'P_mainShape', 'scale_x', s1)
         patch_blyt('PaButton_Generic_Numeric', 'N_Cursor', 'scale_x', 1/s1)
         patch_blyt('PaButton_Generic_Numeric', 'B_Hit', 'scale_x', 1/s1)
+
         patch_blyt('PaMenu_Cursor', 'N_TypeA_00', 'scale_x', 1/s1)
         patch_blyt('PaMenu_Cursor', 'N_TypeB_00', 'scale_x', 1/s1)
+
         patch_blyt('Gallery_00', 'L_Blur', 'scale_x', 1/s1)
         # patch_blyt('Gallery_00', 'L_BackingWindow', 'scale_x', 1/s1)
-        patch_blyt('PaMenu_Confirmation', 'P_bg_black', 'scale_x', s1)
+
+        patch_blyt('PaMenu_Confirmation', 'N_Window', 'scale_x', s1)
         patch_blyt('PaMenu_Confirmation', 'P_bg_black', 'scale_x', 1/s1)
+
         patch_blyt('PaTutorial_00', 'L_Blur', 'scale_x', 1/s1)
+
         patch_blyt('MiniMarioIndicator', 'RootPane', 'scale_x', s1)
+
         patch_blyt('TimeAttackOutro_00', 'BG', 'scale_x', 1/s1)
+
         patch_blyt('TimeAttackIntro_00', 'BG', 'scale_x', 1/s1)
+
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
         patch_blyt('GameOver_00', 'N_Buttons', 'scale_x', 1)
+
         # patch_blyt('PaMenu_Cursor', 'N_LT_00', 'shift_x', -100)
         # patch_blyt('PaMenu_Cursor', 'N_LD_00', 'shift_x', -100)
         # patch_blyt('PaMenu_Cursor', 'N_L_00', 'shift_x', -100)
