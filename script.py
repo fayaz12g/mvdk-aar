@@ -200,8 +200,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameModeChoice_00', 'P_Background', 'scale_x', 1/s1)
 
         # Controls menu items
-        # patch_blyt('PaMenu_Generic', 'N_Window_shape', 'scale_x', 1/s1)
-        # patch_blyt('PaMenu_Generic', 'P_bg_white', 'scale_x', 1/s1)
+        patch_blyt('PaMenu_Generic', 'RootPane', 'scale_x', s1)
+        patch_blyt('PaMenu_Generic', 'P_bg_white', 'scale_x', 1/s1)
         # patch_blyt('PaMenu_Generic', 'N_GenericWindow', 'scale_x', s1)
 
         patch_blyt('ActionGuideMenu_00', 'N_Background', 'scale_x', 1/s1)
@@ -214,7 +214,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('PaMenu_Cursor', 'N_TypeA_00', 'scale_x', 1/s1)
         patch_blyt('PaMenu_Cursor', 'N_TypeB_00', 'scale_x', 1/s1)
         patch_blyt('Gallery_00', 'L_Blur', 'scale_x', 1/s1)
-        patch_blyt('Gallery_00', 'L_BackingWindow', 'scale_x', 1/s1)
+        # patch_blyt('Gallery_00', 'L_BackingWindow', 'scale_x', 1/s1)
         patch_blyt('PaMenu_Confirmation', 'P_bg_black', 'scale_x', 1/s1)
         patch_blyt('PaTutorial_00', 'L_Blur', 'scale_x', 1/s1)
         patch_blyt('MiniMarioIndicator', 'RootPane', 'scale_x', s1)
