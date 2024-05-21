@@ -49,17 +49,29 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
                 f.write(bytes.fromhex(content_new))
 
 
-    def patch_anim(folder, filename, offset, value):
-        full_path = os.path.join(unpacked_folder, 'romfs', 'LayoutData', folder, 'layout', 'anim', f'{filename}.bflan') 
-        with open(full_path, 'rb') as f:
-            content = f.read().hex()
-        idx = offset
-        content_new = content[:idx] + float2hex(value) + content[idx+8:]
-        with open(full_path, 'wb') as f:
-            f.write(bytes.fromhex(content_new))  
+    def patch_anim(source, filename, offset, value):
+        modified_name = filename + "_name"
+        
+        # Get all paths for the given filename
+        paths = anim_file_paths.get(modified_name, [])
+        if not paths:
+            # If no paths are found, create a default path and add it to the list
+            default_path = os.path.join(unpacked_folder, "Layout", f"{source}.Nin_NX_NVN", "anim", f"{filename}.bflyt")
+            paths.append(default_path)
+        
+        # Iterate over each path and patch the corresponding file
+        for anim_path in paths:
+            with open(anim_path, 'rb') as f:
+                content = f.read().hex()
+            
+            idx = offset
+            content_new = content[:idx] + float2hex(value) + content[idx+8:]
+            
+            with open(anim_path, 'wb') as f:
+                f.write(bytes.fromhex(content_new))
+
             
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
-    file_names_stripped = []
     
     do_not_scale_rootpane = ["PaMenu_Cursor", "PaMenu_Btn_Slot", "PaMenu_Btn_Misc", "PaButton_Generic", "Loading_00", "Saving_00", "Pa_LoadingBlocks_00", "SceneChangeFade_00", "MenuBackground_00", "Pa_BlurBackground", "Footer_00"]
    
@@ -85,6 +97,21 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
                 if modified_name not in file_paths:
                     file_paths[modified_name] = []
                 file_paths[modified_name].append(full_path)
+
+        # Initialize a dictionary to store lists of paths
+    anim_file_paths = {}
+    anim_file_names_stripped = []
+
+    for root, dirs, files in os.walk(blyt_folder):
+        for file_name in files:
+            if file_name.endswith(".bflan"):
+                stripped_name = file_name.strip(".bflan")
+                anim_file_names_stripped.append(stripped_name)
+                full_path = os.path.join(root, file_name)
+                modified_name = stripped_name + "_name"
+                if modified_name not in anim_file_paths:
+                    anim_file_paths[modified_name] = []
+                anim_file_paths[modified_name].append(full_path)
 
     
     if aspect_ratio >= 16/9:
@@ -138,6 +165,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelSelect_00', 'P_HeaderBG_02', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'P_HeaderBGShadow_00', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'L_GameMode', 'shift_x', do_specific_math(1520, aspect_ratio))
+        patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeIn', do_specific_math(1520, aspect_ratio), 1.08/s1)
+        patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeOut', do_specific_math(1520, aspect_ratio), 1.08/s1)
 
         # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(1520, aspect_ratio))  
         # # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(0, aspect_ratio))
