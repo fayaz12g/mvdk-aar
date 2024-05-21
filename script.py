@@ -165,8 +165,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelSelect_00', 'P_HeaderBG_02', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'P_HeaderBGShadow_00', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'L_GameMode', 'shift_x', do_specific_math(1520, aspect_ratio))
-        patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeIn', do_specific_math(1520, aspect_ratio), 1.08/s1)
-        patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeOut', do_specific_math(1520, aspect_ratio), 1.08/s1)
+        patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeIn', int(do_specific_math(1520, aspect_ratio)), 1.08/s1)
+        patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeOut', int(do_specific_math(1520, aspect_ratio)), 1.08/s1)
 
         # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(1520, aspect_ratio))  
         # # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(0, aspect_ratio))
@@ -223,8 +223,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameSplashScreen_00', 'P_BG_Gradient', 'scale_y', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_WhiteBackground', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_WhiteBackground', 'scale_y', 1/s1)
-        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_x', 1.1/s1)
-        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_y', 1.1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_x', 0.9/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_y', 0.9/s1)
         patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_x', 1.1/s1)
         patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_y', 1.1/s1)
 
@@ -329,7 +329,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
             patch_blyt('PaFooter_00', 'L_Special_00', 'shift_x', do_some_math(-830.79, aspect_ratio))
             patch_blyt('PaFooter_00', 'L_ButtonX_00', 'shift_x', do_some_math(-645.74, aspect_ratio))
 
-            patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_x', do_some_math(-480, aspect_ratio))
+            patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_x', do_some_math(-550, aspect_ratio))
+            patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_y', do_some_math(80, aspect_ratio))
             patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(450, aspect_ratio))
             # patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_y', do_some_math(200, aspect_ratio))
             # patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(-200, aspect_ratio))
