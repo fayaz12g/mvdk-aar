@@ -156,6 +156,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelHUD_00', 'N_TA_Timer', 'scale_x', s1)
         patch_blyt('GameLevelHUD_00', 'N_TA_Timer', 'shift_x', do_some_math(487, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'N_Time', 'shift_x', do_some_math(165, aspect_ratio))
+        patch_blyt('GameLevelHUD_00', 'L_Time', 'shift_x', do_some_math(100, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'N_Collectable', 'shift_x', do_special_math(120, aspect_ratio))
 
         patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
@@ -181,16 +182,18 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameSplashScreen_00', 'P_BG_Gray', 'scale_y', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Stars', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Stars', 'scale_y', 1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_Logo', 'scale_x', 1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_Logo', 'scale_y', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Gradient', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Gradient', 'scale_y', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_WhiteBackground', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_WhiteBackground', 'scale_y', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_y', 1/s1)
-        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_x', 1.05/s1)
-        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_y', 1.05/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_x', 1.5/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_y', 1.5/s1)
         patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_x', do_some_math(-500, aspect_ratio))
-        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(500, aspect_ratio))
+        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(400, aspect_ratio))
 
         patch_blyt('PaFooter_00', 'P_Backing', 'scale_x', 1/s1)
         patch_blyt('PaFooter_00', 'P_Shadow', 'scale_x', 1/s1)
@@ -268,7 +271,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         # patch_blyt('Pa_GalleryAudioListenerWindow', 'L_MusicButton', 'scale_x', s1)
         # patch_blyt('Pa_GalleryAudioListenerWindow', 'L_SE_Button', 'scale_x', s1)
 
-# fix single player pause menu
+# fix game confimration (controller, exit), timer shift, title DK
 
         patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', s1) #Mario Bubble
         patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', s1) #Toad Bubble
