@@ -195,7 +195,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
         # This is a TEST
         # patch_blyt('GameLevelHUD_00', 'L_Lives', 'shift_x', do_special_math(120, aspect_ratio))
-        patch_blyt('GameLevelHUD_00', 'L_Lives', 'shift_x', do_some_math(-85, aspect_ratio))
+        patch_blyt('GameLevelHUD_00', 'L_Lives', 'shift_x', do_some_math(-82, aspect_ratio))
         
         patch_blyt('GameLevelHUD_00', 'N_Block_T', 'shift_x', do_some_math(-90, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'N_Block_Y', 'shift_x', do_some_math(90, aspect_ratio))
@@ -204,7 +204,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelHUD_00', 'N_TA_Timer', 'scale_x', s1)
         patch_blyt('GameLevelHUD_00', 'N_TA_Timer', 'shift_x', do_some_math(487, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'N_Time', 'shift_x', do_some_math(200, aspect_ratio))
-        patch_blyt('GameLevelHUD_00', 'L_Time', 'shift_x', do_some_math(175, aspect_ratio))
+        patch_blyt('GameLevelHUD_00', 'L_Time', 'shift_x', do_some_math(158, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'N_Collectable', 'shift_x', do_special_math(120, aspect_ratio))
 
         patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
