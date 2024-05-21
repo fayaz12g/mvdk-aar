@@ -1,101 +1,85 @@
 import os
+import requests
+import zipfile
+import shutil
+import getpass
+import hashlib
+
+def calculate_hash(file_path):
+    """Calculate the SHA256 hash of the given file."""
+    sha256 = hashlib.sha256()
+    with open(file_path, "rb") as f:
+        for block in iter(lambda: f.read(4096), b""):
+            sha256.update(block)
+    return sha256.hexdigest()
+
+def get_remote_file_hash(url):
+    """Download the file content and calculate its SHA256 hash without saving it."""
+    response = requests.get(url)
+    response.raise_for_status()
+    sha256 = hashlib.sha256(response.content).hexdigest()
+    return sha256
 
 def download_extract_copy(input_folder, mod_name):
-    import requests
-    import zipfile
-    import shutil
-    import getpass
-
-    # URL of the ZIP file
-    zip_url = "https://github.com/fayaz12g/aar-files/raw/main/mvdk/UI.zip"
-    zip2_url = "https://github.com/fayaz12g/aar-files/raw/main/mvdk/Layout.zip"
-    zip3_url = "https://github.com/fayaz12g/aar-files/raw/main/mvdk/Mals.zip"
-
     username = getpass.getuser()
     directory_path = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/mvdk"
-    # Check if the directory exists
-    if not os.path.exists(directory_path):
-        # Create the directory if it doesn't exist
-        os.makedirs(directory_path)
-        print(f"Directory {directory_path} created successfully.")
-    else:
-        print(f"Directory {directory_path} already exists.")
-    perm_folder = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/mvdk"
-    zip_file_source = os.path.join(perm_folder, "UI.zip")
-    zip2_file_source = os.path.join(perm_folder, "Layout.zip")
-    zip3_file_source = os.path.join(perm_folder, "Mals.zip")
-    
 
-    if not os.path.isfile(zip_file_source):
+    zip_urls = [
+        ("https://github.com/fayaz12g/aar-files/raw/main/mvdk/UI.zip", "UI.zip"),
+        ("https://github.com/fayaz12g/aar-files/raw/main/mvdk/Layout.zip", "Layout.zip"),
+        ("https://github.com/fayaz12g/aar-files/raw/main/mvdk/Mals.zip", "Mals.zip")
+    ]
+
+    # Check if the directory exists, create if it doesn't
+    os.makedirs(directory_path, exist_ok=True)
+
+    for zip_url, zip_filename in zip_urls:
+        zip_file_source = os.path.join(directory_path, zip_filename)
+        remote_hash = get_remote_file_hash(zip_url)
+
+        # Check if file exists and verify its hash
+        if os.path.isfile(zip_file_source):
+            local_hash = calculate_hash(zip_file_source)
+            if local_hash == remote_hash:
+                print(f"{zip_filename} is up to date.")
+                continue
+            else:
+                print(f"{zip_filename} is outdated. Downloading new version.")
+        else:
+            print(f"{zip_filename} not found. Downloading.")
+
         # Download the ZIP file
-        print("Downloading zip file. This may take up to 10 seconds.")
         response = requests.get(zip_url)
-        print("Zip file downloaded.")
+        response.raise_for_status()
         with open(zip_file_source, "wb") as file:
-            print("Writing contents to temp folder.")
             file.write(response.content)
 
-    # Extract the ZIP file
-    extract_folder = os.path.join(input_folder, mod_name, "temp1")
-    print(f"Extracting zip to {extract_folder}. This can also take a few seconds.")
-    with zipfile.ZipFile(zip_file_source, "r") as zip_ref:
-        zip_ref.extractall(extract_folder)
-    
-    if not os.path.isfile(zip2_file_source):
-        # Download the ZIP file
-        print("Downloading zip file. This may take up to 10 seconds.")
-        response = requests.get(zip2_url)
-        print("Zip file downloaded.")
-        with open(zip2_file_source, "wb") as file:
-            print("Writing contents to temp folder.")
-            file.write(response.content)
+        print(f"{zip_filename} downloaded and saved.")
 
-    # Extract the ZIP file
-    extract2_folder = os.path.join(input_folder, mod_name, "temp2")
-    print(f"Extracting zip to {extract2_folder}. This can also take a few seconds.")
-    with zipfile.ZipFile(zip2_file_source, "r") as zip_ref:
-        zip_ref.extractall(extract2_folder)
+    # Extraction and copy logic
+    extract_folders = [os.path.join(input_folder, mod_name, f"temp{i+1}") for i in range(3)]
+    for i, (zip_url, zip_filename) in enumerate(zip_urls):
+        zip_file_source = os.path.join(directory_path, zip_filename)
+        extract_folder = extract_folders[i]
+        with zipfile.ZipFile(zip_file_source, "r") as zip_ref:
+            zip_ref.extractall(extract_folder)
+        print(f"Extracted {zip_filename} to {extract_folder}.")
 
-    if not os.path.isfile(zip3_file_source):
-        # Download the ZIP file
-        print("Downloading zip file. This may take up to 10 seconds.")
-        response = requests.get(zip3_url)
-        print("Zip file downloaded.")
-        with open(zip3_file_source, "wb") as file:
-            print("Writing contents to temp folder.")
-            file.write(response.content)
-
-    # Extract the ZIP file
-    extract3_folder = os.path.join(input_folder, mod_name, "temp3")
-    print(f"Extracting zip to {extract3_folder}. This can also take a few seconds.")
-    with zipfile.ZipFile(zip3_file_source, "r") as zip_ref:
-        zip_ref.extractall(extract3_folder)
-
-
-    # Copy the extracted file
-    print("Copying extracted files")
+    # Copy the extracted files
     romfs_folder = os.path.join(input_folder, mod_name, "romfs")
-    extracted_folder = os.path.join(extract_folder)
-    extracted2_folder = os.path.join(extract2_folder)
-    extracted3_folder = os.path.join(extract3_folder)
-    dst_folder_path = os.path.join(romfs_folder, "UI")
-    dst2_folder_path = os.path.join(romfs_folder, "Layout")
-    dst3_folder_path = os.path.join(romfs_folder, "Mals")
+    dst_paths = [os.path.join(romfs_folder, name) for name in ["UI", "Layout", "Mals"]]
 
     # Remove the existing destination folder if it exists
     if os.path.exists(romfs_folder):
         shutil.rmtree(romfs_folder)
 
-    # Recreate the destination folder and copy the content
-    os.makedirs(os.path.dirname(dst_folder_path), exist_ok=True)
-    os.makedirs(os.path.dirname(dst2_folder_path), exist_ok=True)
-    os.makedirs(os.path.dirname(dst3_folder_path), exist_ok=True)
-    shutil.copytree(extracted_folder, dst_folder_path)
-    shutil.copytree(extracted2_folder, dst2_folder_path)
-    shutil.copytree(extracted2_folder, dst3_folder_path)
+    # Recreate the destination folders and copy the content
+    for extract_folder, dst_folder in zip(extract_folders, dst_paths):
+        os.makedirs(os.path.dirname(dst_folder), exist_ok=True)
+        shutil.copytree(extract_folder, dst_folder)
+        print(f"Copied from {extract_folder} to {dst_folder}.")
 
     # Clean up
-    print("Cleaning up old files")
-    shutil.rmtree(extract_folder)
-    shutil.rmtree(extract2_folder)
-    shutil.rmtree(extract3_folder)
+    for extract_folder in extract_folders:
+        shutil.rmtree(extract_folder)
+    print("Cleanup completed.")
