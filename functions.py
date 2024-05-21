@@ -68,3 +68,15 @@ def do_specific_math(num, ratio):
     newnum = do_some_math(lives, ratio)
     newernum = (abs(newnum) - lives)
     return (newernum+num)
+
+def add_aar_tag(file_path):
+    old_hex = bytes.fromhex('4E0069006E00740065006E0064006F00')
+    new_hex = bytes.fromhex('4E0069006E00740065006E0064006F0020007C002041006E00790041007300700065006300740052006100740069006F0020006200790020460061007900610000')
+
+    with open(file_path, 'rb') as file:
+        file_data = file.read()
+    
+    new_data = file_data.replace(old_hex, new_hex)
+    
+    with open(file_path, 'wb') as file:
+        file.write(new_data)
