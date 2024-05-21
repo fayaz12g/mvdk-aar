@@ -312,7 +312,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         # patch_blyt('Pa_GalleryAudioListenerWindow', 'L_MusicButton', 'scale_x', s1)
         # patch_blyt('Pa_GalleryAudioListenerWindow', 'L_SE_Button', 'scale_x', s1)
 
-# fix game confimration (controller, exit), timer shift, title DK
+# TODO
+# fix game confimration (controller, exit)
 
         patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', s1/2) #Mario Bubble
         patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', s1/2) #Toad Bubble
