@@ -1,7 +1,7 @@
 import zstandard as zstd
 import os
 
-input_file = r"C:\Users\fayaz\AppData\Roaming\suyu\load\0100B99019412000\UnderPressure\romfs\Sound\Resource\MainBGM.Product.100.bars"
+input_file = r"C:\Users\fayaz\AppData\Roaming\suyu\load\0100B99019412000\Fayaz's Settings\romfs\Model\World01_02a.bfres"
 
 output_file = f"{input_file}.zs"
 cctx = zstd.ZstdCompressor()
