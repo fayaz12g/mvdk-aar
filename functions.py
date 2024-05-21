@@ -70,8 +70,11 @@ def do_specific_math(num, ratio):
     return (newernum+num)
 
 def add_aar_tag(file_path):
-    old_hex = bytes.fromhex('4E0069006E00740065006E0064006F00')
-    new_hex = bytes.fromhex('4E0069006E00740065006E0064006F0020007C002041006E00790041007300700065006300740052006100740069006F0020006200790020460061007900610000')
+    old_hex_str = '4E 00 69 00 6E 00 74 00 65 00 6E 00 64 00 6F 00'
+    new_hex_str = '4E 00 69 00 6E 00 74 00 65 00 6E 00 64 00 6F 00 20 00 7C 00 20 00 41 00 6E 00 79 00 41 00 73 00 70 00 65 00 63 00 74 00 52 00 61 00 74 00 69 00 6F 00 20 00 62 00 79 00 20 00 46 00 61 00 79 00 61 00 00'
+
+    old_hex = bytes.fromhex(old_hex_str)
+    new_hex = bytes.fromhex(new_hex_str)
 
     with open(file_path, 'rb') as file:
         file_data = file.read()

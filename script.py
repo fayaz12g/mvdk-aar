@@ -65,11 +65,11 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
    
     rootpane_by_y = ["MenuBackground_00", "Loading_00", "SceneChangeFade_00", "Saving_00", "Pa_LoadingBlocks_00"]
 
-    # Add the AAR Tag on the splash before scaling
-    splash1 = os.path.join(unpacked_folder, "Layout", f"GameSplashScreen_00.Nin_NX_NVN", "blyt", f"GameSplashScreen_00.bflyt")
-    splash2 = os.path.join(unpacked_folder, "UI", "LayoutArchive", f"Menu.Product.100.Nin_NX_NVN", "blyt", f"GameSplashScreen_00.bflyt")
-    add_aar_tag(splash1)
-    add_aar_tag(splash2)
+    # # Add the AAR Tag on the splash before scaling
+    # splash1 = os.path.join(unpacked_folder, "Layout", f"GameSplashScreen_00.Nin_NX_NVN", "blyt", f"GameSplashScreen_00.bflyt")
+    # splash2 = os.path.join(unpacked_folder, "UI", "LayoutArchive", f"Menu.Product.100.Nin_NX_NVN", "blyt", f"GameSplashScreen_00.bflyt")
+    # add_aar_tag(splash1)
+    # add_aar_tag(splash2)
 
     # Initialize a dictionary to store lists of paths
     file_paths = {}
