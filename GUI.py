@@ -312,11 +312,12 @@ def select_mario_folder():
 
     for root, _, files in os.walk(romfs_folder):
         for file in files:
-            if file.lower().endswith(".zs") and file.lower != "USen.Product.100.sarc.zs":
+            if file.lower().endswith(".zs") and file.lower() != "usen.product.100.sarc.zs":
                 file_path = os.path.join(root, file)
                 print(f"Extracting {file}.")
                 decompress_zstd(file_path)
                 os.remove(file_path)
+
 
     ####################
     # BLARC Extraction #
@@ -324,12 +325,11 @@ def select_mario_folder():
 
     for root, _, files in os.walk(romfs_folder):
         for file in files:
-            if file.lower().endswith(".zs") and file.lower() != "usen.product.100.sarc.zs":
+            if file.lower().endswith(".blarc"):
                 file_path = os.path.join(root, file)
                 print(f"Extracting {file}.")
-                decompress_zstd(file_path)
+                extract_blarc(file_path)
                 os.remove(file_path)
-
                 
     ###########################
     # Perform Pane Strecthing #

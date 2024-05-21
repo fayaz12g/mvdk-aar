@@ -194,12 +194,11 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameSplashScreen_00', 'P_BG_Gradient', 'scale_y', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_WhiteBackground', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_WhiteBackground', 'scale_y', 1/s1)
-        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_x', 1.2/s1)
-        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_y', 1.2/s1)
-        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_x', 1.2/s1)
-        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_y', 1.2/s1)
-        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_x', do_some_math(-430, aspect_ratio))
-        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(430, aspect_ratio))
+        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_x', 1.1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_y', 1.1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_x', 1.1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_y', 1.1/s1)
+
 
         patch_blyt('PaFooter_00', 'P_Backing', 'scale_x', 1/s1)
         patch_blyt('PaFooter_00', 'P_Shadow', 'scale_x', 1/s1)
@@ -210,12 +209,6 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('WorldIntro', 'P_Icon_00', 'shift_x', do_some_math(-802, aspect_ratio))
         patch_blyt('WorldIntro', 'T_WorldName_00', 'shift_x', do_some_math(-794, aspect_ratio))
 
-        patch_blyt('PaFooter_00', 'L_Select_01', 'shift_x', do_some_math(223.96, aspect_ratio))
-        patch_blyt('PaFooter_00', 'L_ButtonB_01', 'shift_x', do_some_math(409.02, aspect_ratio))
-        patch_blyt('PaFooter_00', 'L_ButtonX_01', 'shift_x', do_some_math(-645.74, aspect_ratio))
-        patch_blyt('PaFooter_00', 'L_ButtonA_01', 'shift_x', do_some_math(779.14, aspect_ratio))
-        patch_blyt('PaFooter_00', 'L_Special_00', 'shift_x', do_some_math(-830.79, aspect_ratio))
-        patch_blyt('PaFooter_00', 'L_ButtonX_00', 'shift_x', do_some_math(-645.74, aspect_ratio))
         patch_blyt('PaFooter_00', 'L_Select_01', 'scale_x', s1)
         patch_blyt('PaFooter_00', 'L_ButtonB_01', 'scale_x', s1)
         patch_blyt('PaFooter_00', 'L_ButtonX_01', 'scale_x', s1)
@@ -300,6 +293,17 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
+            patch_blyt('PaFooter_00', 'L_Select_01', 'shift_x', do_some_math(223.96, aspect_ratio))
+            patch_blyt('PaFooter_00', 'L_ButtonB_01', 'shift_x', do_some_math(409.02, aspect_ratio))
+            patch_blyt('PaFooter_00', 'L_ButtonX_01', 'shift_x', do_some_math(-645.74, aspect_ratio))
+            patch_blyt('PaFooter_00', 'L_ButtonA_01', 'shift_x', do_some_math(779.14, aspect_ratio))
+            patch_blyt('PaFooter_00', 'L_Special_00', 'shift_x', do_some_math(-830.79, aspect_ratio))
+            patch_blyt('PaFooter_00', 'L_ButtonX_00', 'shift_x', do_some_math(-645.74, aspect_ratio))
+
+            patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_x', do_some_math(-480, aspect_ratio))
+            patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(420, aspect_ratio))
+            # patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_y', do_some_math(200, aspect_ratio))
+            # patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(-200, aspect_ratio))
 
 
         # To mirror an object, do -x scale, and 180 roate y. For example, if we want to mirror something that is 
