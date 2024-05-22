@@ -178,8 +178,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelSelect_00', 'P_HeaderBG_02', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'P_HeaderBGShadow_00', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'L_GameMode', 'shift_x', do_specific_math(1520, aspect_ratio))
-        patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeIn', int(do_specific_math(520, aspect_ratio)), s1)
-        patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeOut', int(do_specific_math(520, aspect_ratio)), s1)
+        patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeIn', int(do_specific_math(1520, aspect_ratio)), 1/s1)
+        patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeOut', int(do_specific_math(1520, aspect_ratio)), 1/s1)
 
         # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(1520, aspect_ratio))  
         # # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(0, aspect_ratio))
