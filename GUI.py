@@ -32,6 +32,7 @@ from repack import *
 from extract import extract_blarc
 from functions import *
 import pyautogui
+from video import *
 
 #######################
 #### Create Window ####
@@ -57,7 +58,7 @@ ar_numerator = StringVar(value=f"{screen_width}")
 ar_denominator = StringVar(value=f"{screen_height}")
 do_disable_fxaa = BooleanVar(value=True)
 do_disable_dynamicres = BooleanVar(value=True)
-do_disable_dof = BooleanVar(value=True)
+do_video = BooleanVar(value=True)
 do_disable_bloom = BooleanVar(value=True)
 do_screenshot = BooleanVar(value=True)
 do_expirements = BooleanVar(value=False)
@@ -306,6 +307,15 @@ def select_mario_folder():
     visual_fixes = create_visuals(do_screenshot.get(), do_disable_fxaa.get(), do_disable_dynamicres.get())
     create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes, do_disable_bloom.get())
 
+    ##################
+    ## Cutscene Fix ##
+    ##################
+    
+    if do_video.get():
+        output_folder = os.path.join(romfs_folder, "Movie")
+        download_video_files(text_folder)
+        process_videos_in_folder(str(scaling_factor), output_folder)
+
     #################
     # ZS Extraction #
     #################
@@ -385,7 +395,7 @@ def pack_widgets():
     fxaa_checkbox.pack(padx=5, pady=5)
     screenshot_checkbox.pack(padx=5, pady=5)
     dynamicres_checkbox.pack(padx=10, pady=10)
-    # dof_checkbox.pack(padx=10, pady=10)
+    video_checkbox.pack(padx=10, pady=10)
     bloom_checkbox.pack(padx=10, pady=10)
     expirement_checkbox.pack(padx=10, pady=10)
     
@@ -451,7 +461,7 @@ def forget_packing():
     fxaa_checkbox.pack_forget()
     screenshot_checkbox.pack_forget()
     dynamicres_checkbox.pack_forget()
-    # dof_checkbox.pack_forget()
+    video_checkbox.pack_forget()
     bloom_checkbox.pack_forget()
     expirement_checkbox.pack_forget()
 
@@ -532,7 +542,7 @@ denominator_entry.bind("<FocusOut>", lambda event: handle_focus_out(denominator_
 fxaa_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="120 FPS (Expiremental)", variable=do_disable_fxaa)
 screenshot_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Depth of Field", variable=do_screenshot)
 dynamicres_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="2880x1620 Docked", variable=do_disable_dynamicres)
-dof_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Depth of Field (DOF)", variable=do_disable_dof)
+video_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Cutscenes Fix", variable=do_video)
 bloom_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Ultrawide Camera", variable=do_disable_bloom)
 expirement_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Expiremental Menu", variable=do_expirements)
 

@@ -1,10 +1,14 @@
 import subprocess
 import sys
+import getpass
+import requests
+import zipfile
+import shutil
 import os
 
-def scale_video(ffmpeg_path, input_path, output_path):
+def scale_video(ffmpeg_path, input_path, output_path, scaling_factor):
     # Set the scale factor
-    scale_factor = 0.76
+    scale_factor = float(scaling_factor)
 
     # Calculate the padding values
     input_width = 1920
@@ -25,7 +29,10 @@ def scale_video(ffmpeg_path, input_path, output_path):
     # Execute the command
     subprocess.run(command, check=True)
 
-def process_videos_in_folder(ffmpeg_path, input_folder, output_folder):
+def process_videos_in_folder(scaling_factor, output_folder):
+    username = getpass.getuser()
+    ffmpeg_path = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/mvdk/ffmpeg/ffmpeg.exe"
+    input_folder = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/mvdk/Movie"
     if not os.path.isdir(input_folder):
         print(f"Input folder not found: {input_folder}")
         sys.exit(1)
@@ -38,22 +45,62 @@ def process_videos_in_folder(ffmpeg_path, input_folder, output_folder):
             input_path = os.path.join(input_folder, filename)
             output_path = os.path.join(output_folder, filename)
             try:
-                scale_video(ffmpeg_path, input_path, output_path)
-                print(f"Processed video: {filename}")
+                print(f"Processing video: {filename}")
+                scale_video(ffmpeg_path, input_path, output_path, scaling_factor)
+                print(f"Finished video: {filename}")
             except subprocess.CalledProcessError as e:
                 print(f"An error occurred while processing {filename}: {e}")
 
-if __name__ == '__main__':
-    if len(sys.argv) != 4:
-        print("Usage: python scale_video.py <ffmpeg_path> <input_folder> <output_folder>")
-        sys.exit(1)
+def download_video_files(input_folder):
+    username = getpass.getuser()
+    directory_path = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/mvdk"
 
-    ffmpeg_path = sys.argv[1]
-    input_folder = sys.argv[2]
-    output_folder = sys.argv[3]
+    zip_urls = [
+        ("https://github.com/fayaz12g/aar-files/raw/main/mvdk/Movie.zip", "Movie.zip"),
+        ("https://github.com/fayaz12g/aar-files/raw/main/mvdk/ffmpeg.zip", "ffmpeg.zip"),
+    ]
 
-    if not os.path.isfile(ffmpeg_path):
-        print(f"ffmpeg executable not found at {ffmpeg_path}")
-        sys.exit(1)
+    # Check if the directory exists, create if it doesn't
+    os.makedirs(directory_path, exist_ok=True)
 
-    process_videos_in_folder(ffmpeg_path, input_folder, output_folder)
+    for zip_url, zip_filename in zip_urls:
+        zip_folder = os.path.splitext(zip_filename)[0]
+        zip_file_path = os.path.join(directory_path, zip_folder)
+        zip_file_source = os.path.join(directory_path, zip_filename)
+
+        # Check if directory exists
+        if os.path.isdir(zip_file_path):
+            print(f"{zip_folder} folder already exists.")
+        else: 
+            # Download the ZIP file
+            print(f"Downloading {zip_filename}")
+            response = requests.get(zip_url)
+            response.raise_for_status()
+            with open(zip_file_source, "wb") as file:
+                file.write(response.content)
+            print(f"{zip_filename} downloaded.")
+
+            # Extract the ZIP file
+            with zipfile.ZipFile(zip_file_source, "r") as zip_ref:
+                zip_ref.extractall(zip_file_path)
+            print(f"Extracted {zip_filename} to {zip_file_path}.")
+
+            # Clean up the downloaded ZIP file
+            os.remove(zip_file_source)
+            print(f"Deleted {zip_filename} after extraction.")
+    
+    # Not needed as the movie scaling script will output it 
+
+    # # Copy the extracted "Movie" folder to the "romfs" folder
+    # romfs_folder = os.path.join(input_folder, "romfs")
+    # video_folder_src = os.path.join(directory_path, "Movie")
+    # video_folder_dst = os.path.join(romfs_folder, "Movie")
+
+    # if os.path.exists(video_folder_src):
+    #     os.makedirs(os.path.dirname(video_folder_dst), exist_ok=True)
+    #     if os.path.exists(video_folder_dst):
+    #         shutil.rmtree(video_folder_dst)
+    #     shutil.copytree(video_folder_src, video_folder_dst)
+    #     print(f"Copied Movie folder from {video_folder_src} to {video_folder_dst}.")
+    # else:
+    #     print(f"Source Movie folder not found at {video_folder_src}.")
