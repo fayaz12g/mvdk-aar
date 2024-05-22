@@ -38,7 +38,7 @@ from video import *
 #### Create Window ####
 #######################
 
-tool_version = "3.0.0"
+tool_version = "4.0.0"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Mario vs Donkey Kong")
