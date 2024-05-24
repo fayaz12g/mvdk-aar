@@ -300,7 +300,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('TimeAttackIntro_00', 'BG', 'scale_x', 1/s1)
 
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
-        patch_blyt('GameOver_00', 'N_Buttons', 'scale_x', 1/s1)
+        # patch_blyt('GameOver_00', 'N_Buttons', 'scale_x', 1/s1)
 
         patch_blyt('LevelIntro_00', 'N_Body', 'scale_x', s1)
 
@@ -317,12 +317,13 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
 # TODO
 # fix game confimration (controller, exit)
-# Fix indicators!!! Mini mario, player 1 and 2
 
-        patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', s1/2) #Mario Bubble
-        patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', s1/2) #Toad Bubble
-        patch_blyt('MiniMarioIndicator', 'RootPane', 'scale_x', s1/2)
-        patch_blyt('BarrelIndicator', 'RootPane', 'scale_x', s1/2)
+        # Fix indicators!!! Mini mario, player 1 and 2
+
+        # patch_blyt('PlayerIndicator_00', 'RootPane', 'scale_x', s1/2) #Mario Bubble
+        # patch_blyt('PlayerIndicator_01', 'RootPane', 'scale_x', s1/2) #Toad Bubble
+        # patch_blyt('MiniMarioIndicator', 'RootPane', 'scale_x', s1/2)
+        # patch_blyt('BarrelIndicator', 'RootPane', 'scale_x', s1/2)
 
         if expiremental_menu:
             print("Doing Expirements!")
