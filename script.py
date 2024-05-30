@@ -195,6 +195,9 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
         patch_blyt('GameLevelHUD_00', 'P_BorderL', 'shift_x', -2500)
         patch_blyt('GameLevelHUD_00', 'P_BorderR', 'shift_x', 2500)
+        patch_blyt('GameLevelHUD_00', 'N_FadeLeft', 'scale_x', 1/s1)
+        patch_blyt('GameLevelHUD_00', 'N_FadeCenter', 'scale_x', 1/s1)
+        patch_blyt('GameLevelHUD_00', 'N_FadeRight', 'scale_x', 1/s1)
 
         # This is a TEST
         # patch_blyt('GameLevelHUD_00', 'L_Lives', 'shift_x', do_special_math(120, aspect_ratio))
