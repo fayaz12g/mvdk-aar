@@ -43,7 +43,7 @@ def float2hex(f):
 def do_some_math(num, ratio):
     num = int(num)
     ratio = int(ratio)
-    return ((num/(16/9))*(21/9))
+    return ((num/(16/9))*ratio)
 
 # This one finds the inverse value from the middle of the pane
 def do_special_math(num, ratio):
