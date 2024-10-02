@@ -173,24 +173,15 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('Pa_CongratsWorldClearBanner', 'P_Banner', 'scale_x', 1/s1)
 
 
-        # patch_blyt('WorldLayout', 'N_Base', 'scale_x', s1)
-
-        # patch_blyt('GameLevelWin_00', 'L_World', 'scale_x', 1/s1)
-
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
 
-        patch_blyt('PaCamera_00', 'W_Border_1P', 'scale_x', 1)
-        patch_blyt('PaCamera_00', 'W_Border_2P', 'scale_x', 1)
+        patch_blyt('PaCamera_00', 'W_Border_1P', 'scale_x', 1/s1)
+        patch_blyt('PaCamera_00', 'W_Border_2P', 'scale_x', 1/s1)
 
 
 
         patch_blyt('GameLevelPauseMenu_00', 'L_Window_00', 'scale_x', 1/s1)
-        # patch_blyt('GameLevelPauseMenu_00', 'A_alignment_00', 'scale_x', s1)
-        # patch_blyt('GameLevelPauseMenu_00', 'A_Align', 'scale_x', s1)
-        # patch_blyt('GameLevelPauseMenu_00', 'A_Buttons', 'scale_x', s1)
-        # patch_blyt('GameLevelPauseMenu_00', 'T_WorldName_00', 'scale_x', s1)
-        # patch_blyt('GameLevelPauseMenu_00', 'L_Lives', 'scale_x', s1)
-        # patch_blyt('GameLevelPauseMenu_00', 'L_2P_Header', 'scale_x', s1)
+
         patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
 
 
@@ -214,17 +205,12 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_In', int(do_specific_math(1520, aspect_ratio)), 1/s1)
         patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_Set', int(do_specific_math(1520, aspect_ratio)), 1/s1)      
 
-        # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(1520, aspect_ratio))  
-        # # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(0, aspect_ratio))
-        # patch_blyt('GameLevelSelect_00', 'L_2P_Header', 'shift_x', do_some_math(710, aspect_ratio))
-
+    
         patch_blyt('GameLevelHUD_00', 'N_FadeLeft', 'scale_x', 1/s1)
         patch_blyt('GameLevelHUD_00', 'N_FadeCenter', 'scale_x', 1/s1)
         patch_blyt('GameLevelHUD_00', 'N_FadeRight', 'scale_x', 1/s1)
 
-        # This is a TEST
-        # patch_blyt('GameLevelHUD_00', 'L_Lives', 'shift_x', do_special_math(120, aspect_ratio))
-
+    
         
         patch_blyt('GameLevelHUD_00', 'N_TimeAttack', 'scale_x', 1/s1)
         patch_blyt('GameLevelHUD_00', 'N_TA_Timer', 'scale_x', s1)
@@ -247,16 +233,15 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameSplashScreen_00', 'P_BG_Gray', 'scale_y', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Stars', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Stars', 'scale_y', 1/s1)
-        # patch_blyt('GameSplashScreen_00', 'P_Logo', 'scale_x', 1/s1)
-        # patch_blyt('GameSplashScreen_00', 'P_Logo', 'scale_y', 1/s1)
+
         patch_blyt('GameSplashScreen_00', 'P_BG_Gradient', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Gradient', 'scale_y', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_WhiteBackground', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_WhiteBackground', 'scale_y', 1/s1)
-        # patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_x', 0.9/s1)
-        # patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_y', 0.9/s1)
-        # patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_x', 1.1/s1)
-        # patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_y', 1.1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_x', 1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'scale_y', 1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_x', 1/s1)
+        patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'scale_y', 1/s1)
 
 
         patch_blyt('PaFooter_00', 'P_Backing', 'scale_x', 1/s1)
@@ -375,12 +360,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
             }
             patch_ui_layouts(x_layout_map, "x")
 
-
-            # patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_y', do_some_math(200, aspect_ratio))
-            # patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(-200, aspect_ratio))
-
-
-        # To mirror an object, do -x scale, and 180 roate y. For example, if we want to mirror something that is 
+            # Incorporate old HUD fix logic here for GameLevelHUD_00 elements inside HUD_00
 
     else:
         s1 = aspect_ratio / (16/9)
