@@ -358,7 +358,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
             print("Shifitng elements for corner HUD")
             x_layout_map = {
                 'GameLevelPauseMenu_00': ['L_Lives'],
-                'GameLevelSelect_00': ['L_GameMode', 'P_Icon', 'T_WorldName_00', 'L_StarScore', 'L_Lives'],
+                'GameLevelSelect_00': ['L_GameMode', 'P_Icon_00', 'T_WorldName_00', 'L_StarScore', 'L_Lives'],
                 'PaFooter_00': ['L_Select_01', 'L_ButtonB_01', 'L_ButtonX_01', 'L_ButtonA_01', 'L_Special_00', 'L_ButtonX_00'],
                 'GameSplashScreen_00': ['P_pict_Mario', 'P_pict_DK'],
                 'GameLevelWin_00': ['A_alignment_00', 'L_World'],
@@ -367,10 +367,11 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
                 'WorldIntro': ['P_Icon_00', 'T_WorldName_00'],
                 'PaActionGuidePage': ['Scrollbar'],
                 'Pa_ActionGuideHeader': ['T_ActionGuideText', 'N_PS_G'],
-                'GameLevelHUD_00': ['P_BorderL', 'P_BorderR', 'L_Lives', 'N_TA_Timer', 'N_Time', 'L_Time', 'N_Collectable',
-                                    'N_Block_T', 'N_Block_Y', 'N_DK'],
+                'GameLevelHUD_00': ['P_BorderL', 'P_BorderR', 'N_FadeLeft', "N_FadeRight", "N_FadeCenter"],
                 'Cutscene_Skip': ['L_Skip_00'],
-                'CongratsScreen': ['P_Logo']
+                'CongratsScreen': ['P_Logo'],
+                'Saving_00': ['N_LoadingAssets'],
+                'Pa_LoadingBlocks': ['N_pos']
             }
             patch_ui_layouts(x_layout_map, "x")
 
@@ -455,8 +456,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
                 'WorldIntro': ['P_Icon_00', 'T_WorldName_00'],
                 'PaActionGuidePage': ['Scrollbar'],
                 'Pa_ActionGuideHeader': ['T_ActionGuideText', 'N_PS_G'],
-                'GameLevelHUD_00': ['P_BorderL', 'P_BorderR', 'L_Lives', 'N_TA_Timer', 'N_Time', 'L_Time', 'N_Collectable',
-                                    'N_Block_T', 'N_Block_Y', 'N_DK'],
+                'GameLevelHUD_00': ['P_BorderL', 'P_BorderR', 'N_FadeLeft', "N_FadeRight", "N_FadeCenter"],
                 'Cutscene_Skip': ['L_Skip_00'],
                 'CongratsScreen': ['P_Logo']
             }
