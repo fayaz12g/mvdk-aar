@@ -45,6 +45,10 @@ def do_some_math(num, ratio):
     ratio = int(ratio)
     return ((num/(16/9))*ratio)
 
+def hex2float(h):
+    return struct.unpack('<f', struct.pack('>I', int(h, 16)))[0]
+
+
 # This one finds the inverse value from the middle of the pane
 def do_special_math(num, ratio):
     num = int(num)

@@ -11,6 +11,46 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
     file_paths = {}
 
+    def patch_ui_layouts(layout_map, direction):
+            if direction == "x":
+                offset = 0x40
+            if direction == 'y':
+                offset = 0x48
+
+            for filename, panes in layout_map.items():
+                modified_name = filename + "_name"
+                paths = file_paths.get(modified_name, [])
+                
+                if not paths:
+                    default_path = os.path.join(unpacked_folder, "region_common", "ui", "GameMain", "blyt", f"{filename}.bflyt")
+                    paths.append(default_path)
+                
+                for full_path_of_file in paths:
+                    with open(full_path_of_file, 'rb') as f:
+                        content = f.read().hex()
+                    
+                    start_rootpane = content.index(b'RootPane'.hex())
+                    
+                    for pane in panes:
+                        pane_hex = pane.encode('utf-8').hex()
+                        start_pane = content.index(pane_hex, start_rootpane)
+                        idx = start_pane + offset 
+                        
+                        current_value_hex = content[idx:idx+8]
+                        current_value = hex2float(current_value_hex)
+                        
+                        print(f"Before: {pane} of {filename} at {current_value}")
+                        
+                        new_value = (current_value * s1**-1)
+                        new_value_hex = float2hex(new_value)
+                        
+                        print(f"After: {pane} of {filename} to {new_value}")
+                        
+                        content = content[:idx] + new_value_hex + content[idx+8:]
+                    
+                    with open(full_path_of_file, 'wb') as f:
+                        f.write(bytes.fromhex(content))
+
     broken_names = ["PaMenu_Btn_Level", "PaMenu_Btn_Slot"]
     def patch_blyt(filename, pane, operation, value):
         if operation in ["scale_x", "scale_y"]:
@@ -135,24 +175,14 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
         # patch_blyt('WorldLayout', 'N_Base', 'scale_x', s1)
 
-        patch_blyt('GameLevelWin_00', 'A_alignment_00', 'shift_x', do_special_math(-450, aspect_ratio))
         # patch_blyt('GameLevelWin_00', 'L_World', 'scale_x', 1/s1)
-        patch_blyt('GameLevelWin_00', 'L_World', 'shift_x', do_some_math(-200, aspect_ratio))
 
         patch_blyt('GameOver_00', 'P_BG', 'scale_x', 1/s1)
 
         patch_blyt('PaCamera_00', 'W_Border_1P', 'scale_x', 1)
         patch_blyt('PaCamera_00', 'W_Border_2P', 'scale_x', 1)
 
-        patch_blyt('PaCamera_00', 'T_1P_Text', 'shift_x', do_some_math(584, aspect_ratio))
-        patch_blyt('PaCamera_00', 'P_RightArrow_1P', 'shift_x', do_some_math(600, aspect_ratio))
-        patch_blyt('PaCamera_00', 'P_LeftArrow_1P', 'shift_x', do_some_math(-600, aspect_ratio))
-        patch_blyt('PaCamera_00', 'P_camera_1P', 'shift_x', do_some_math(580, aspect_ratio))
 
-        patch_blyt('PaCamera_00', 'T_2P_Text', 'shift_x', do_some_math(584, aspect_ratio))
-        patch_blyt('PaCamera_00', 'P_RightArrow_2P', 'shift_x', do_some_math(600, aspect_ratio))
-        patch_blyt('PaCamera_00', 'P_LeftArrow_2P', 'shift_x', do_some_math(-600, aspect_ratio))
-        patch_blyt('PaCamera_00', 'P_camera_2P', 'shift_x', do_some_math(580, aspect_ratio))
 
         patch_blyt('GameLevelPauseMenu_00', 'L_Window_00', 'scale_x', 1/s1)
         # patch_blyt('GameLevelPauseMenu_00', 'A_alignment_00', 'scale_x', s1)
@@ -162,7 +192,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         # patch_blyt('GameLevelPauseMenu_00', 'L_Lives', 'scale_x', s1)
         # patch_blyt('GameLevelPauseMenu_00', 'L_2P_Header', 'scale_x', s1)
         patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
-        patch_blyt('GameLevelPauseMenu_00', 'L_Lives', 'shift_x', do_some_math(-803, aspect_ratio))
+
 
         patch_blyt('GameModeChoice_00', 'P_BG', 'scale_x', 1/s1)
         patch_blyt('GameModeChoice_00', 'P_Background', 'scale_x', 1/s1)
@@ -177,7 +207,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('GameLevelSelect_00', 'P_HeaderBG_01', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'P_HeaderBG_02', 'scale_y', 1/s1)
         patch_blyt('GameLevelSelect_00', 'P_HeaderBGShadow_00', 'scale_y', 1/s1)
-        patch_blyt('GameLevelSelect_00', 'L_GameMode', 'shift_x', do_specific_math(1520, aspect_ratio))
+
         patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeIn', int(do_specific_math(1520, aspect_ratio)), 1/s1)
         patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_ModeChangeOut', int(do_specific_math(1520, aspect_ratio)), 1/s1)
         patch_anim('GameLevelSelect_00', 'GameLevelSelect_00_Out', int(do_specific_math(1520, aspect_ratio)), 1/s1)
@@ -186,39 +216,24 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
         # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(1520, aspect_ratio))  
         # # patch_blyt('PaModeDisplay', 'RootPane', 'shift_x', do_specific_math(0, aspect_ratio))
-
-        patch_blyt('GameLevelSelect_00', 'L_StarScore', 'shift_x', do_some_math(799, aspect_ratio))
-        patch_blyt('GameLevelSelect_00', 'L_Lives', 'shift_x', do_some_math(651, aspect_ratio))
         # patch_blyt('GameLevelSelect_00', 'L_2P_Header', 'shift_x', do_some_math(710, aspect_ratio))
-        patch_blyt('GameLevelSelect_00', 'P_Icon', 'shift_x', do_some_math(-802, aspect_ratio))
-        patch_blyt('GameLevelSelect_00', 'T_WorldName_00', 'shift_x', do_some_math(-794, aspect_ratio))
 
-        patch_blyt('GameLevelHUD_00', 'P_BorderL', 'shift_x', -2500)
-        patch_blyt('GameLevelHUD_00', 'P_BorderR', 'shift_x', 2500)
         patch_blyt('GameLevelHUD_00', 'N_FadeLeft', 'scale_x', 1/s1)
         patch_blyt('GameLevelHUD_00', 'N_FadeCenter', 'scale_x', 1/s1)
         patch_blyt('GameLevelHUD_00', 'N_FadeRight', 'scale_x', 1/s1)
 
         # This is a TEST
         # patch_blyt('GameLevelHUD_00', 'L_Lives', 'shift_x', do_special_math(120, aspect_ratio))
-        patch_blyt('GameLevelHUD_00', 'L_Lives', 'shift_x', do_some_math(-82, aspect_ratio))
+
         
-        patch_blyt('GameLevelHUD_00', 'N_Block_T', 'shift_x', do_some_math(-90, aspect_ratio))
-        patch_blyt('GameLevelHUD_00', 'N_Block_Y', 'shift_x', do_some_math(90, aspect_ratio))
-        patch_blyt('GameLevelHUD_00', 'N_DK', 'shift_x', do_special_math(-165, aspect_ratio))
         patch_blyt('GameLevelHUD_00', 'N_TimeAttack', 'scale_x', 1/s1)
         patch_blyt('GameLevelHUD_00', 'N_TA_Timer', 'scale_x', s1)
-        patch_blyt('GameLevelHUD_00', 'N_TA_Timer', 'shift_x', do_some_math(487, aspect_ratio))
-        patch_blyt('GameLevelHUD_00', 'N_Time', 'shift_x', do_some_math(200, aspect_ratio))
-        patch_blyt('GameLevelHUD_00', 'L_Time', 'shift_x', do_some_math(158, aspect_ratio))
-        patch_blyt('GameLevelHUD_00', 'N_Collectable', 'shift_x', do_special_math(120, aspect_ratio))
+
 
         patch_blyt('GameLevelPauseMenu_00', 'L_Blur', 'scale_x', 1/s1)
 
         patch_blyt('Cutscene_Skip', 'RootPane', 'scale_x', s1)
-        patch_blyt('Cutscene_Skip', 'L_Skip_00', 'shift_x', do_some_math(710, aspect_ratio))
 
-        patch_blyt('CongratsScreen', 'P_Logo', 'shift_x', do_some_math(840, aspect_ratio))
 
         patch_blyt('GameMainMenu_00', 'P_BlackPanel', 'scale_x', 1/s1)
 
@@ -227,10 +242,6 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
 
         patch_blyt('PaActionGuidePage', 'S_Scissor', 'scale_x', 1/s1)
         patch_blyt('PaActionGuidePage', 'A_Align', 'scale_x', s1)
-        patch_blyt('PaActionGuidePage', 'Scrollbar', 'shift_x', do_some_math(898, aspect_ratio))
-
-        patch_blyt('Pa_ActionGuideHeader', 'T_ActionGuideText', 'shift_x', do_some_math(-398, aspect_ratio))
-        patch_blyt('Pa_ActionGuideHeader', 'N_PS_G', 'shift_x', do_some_math(670, aspect_ratio))
 
         patch_blyt('GameSplashScreen_00', 'P_BG_Gray', 'scale_x', 1/s1)
         patch_blyt('GameSplashScreen_00', 'P_BG_Gray', 'scale_y', 1/s1)
@@ -254,8 +265,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('WorldIntro', 'P_BorderBot', 'scale_x', 1/s1)
         patch_blyt('WorldIntro', 'P_BorderTop', 'scale_x', 1/s1)
         patch_blyt('WorldIntro', 'P_Fade', 'scale_x', 1/s1)
-        patch_blyt('WorldIntro', 'P_Icon_00', 'shift_x', do_some_math(-802, aspect_ratio))
-        patch_blyt('WorldIntro', 'T_WorldName_00', 'shift_x', do_some_math(-794, aspect_ratio))
+
 
         patch_blyt('PaFooter_00', 'L_Select_01', 'scale_x', s1)
         patch_blyt('PaFooter_00', 'L_ButtonB_01', 'scale_x', s1)
@@ -342,20 +352,29 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
             patch_blyt('GameLevelSelect_00', 'L_Levels_N0', 'shift_x', do_specific_math(1648, aspect_ratio))
             patch_blyt('PaMenu_Btn_Level', 'RootPane', 'scale_x', 1/s1)
 
-
+        
 
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
-            patch_blyt('PaFooter_00', 'L_Select_01', 'shift_x', do_some_math(223.96, aspect_ratio))
-            patch_blyt('PaFooter_00', 'L_ButtonB_01', 'shift_x', do_some_math(409.02, aspect_ratio))
-            patch_blyt('PaFooter_00', 'L_ButtonX_01', 'shift_x', do_some_math(-645.74, aspect_ratio))
-            patch_blyt('PaFooter_00', 'L_ButtonA_01', 'shift_x', do_some_math(779.14, aspect_ratio))
-            patch_blyt('PaFooter_00', 'L_Special_00', 'shift_x', do_some_math(-830.79, aspect_ratio))
-            patch_blyt('PaFooter_00', 'L_ButtonX_00', 'shift_x', do_some_math(-645.74, aspect_ratio))
+            x_layout_map = {
+                'GameLevelPauseMenu_00': ['L_Lives'],
+                'GameLevelSelect_00': ['L_GameMode', 'P_Icon', 'T_WorldName_00', 'L_StarScore', 'L_Lives'],
+                'PaFooter_00': ['L_Select_01', 'L_ButtonB_01', 'L_ButtonX_01', 'L_ButtonA_01', 'L_Special_00', 'L_ButtonX_00'],
+                'GameSplashScreen_00': ['P_pict_Mario', 'P_pict_DK'],
+                'GameLevelWin_00': ['A_alignment_00', 'L_World'],
+                'PaCamera_00': ['T_1P_Text', 'P_RightArrow_1P', 'P_LeftArrow_1P', 'P_camera_1P',
+                                'T_2P_Text', 'P_RightArrow_2P', 'P_LeftArrow_2P', 'P_camera_2P'],
+                'WorldIntro': ['P_Icon_00', 'T_WorldName_00'],
+                'PaActionGuidePage': ['Scrollbar'],
+                'Pa_ActionGuideHeader': ['T_ActionGuideText', 'N_PS_G'],
+                'GameLevelHUD_00': ['P_BorderL', 'P_BorderR', 'L_Lives', 'N_TA_Timer', 'N_Time', 'L_Time', 'N_Collectable',
+                                    'N_Block_T', 'N_Block_Y', 'N_DK'],
+                'Cutscene_Skip': ['L_Skip_00'],
+                'CongratsScreen': ['P_Logo']
+            }
+            patch_ui_layouts(x_layout_map, "x")
 
-            patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_x', do_some_math(-542, aspect_ratio))
-            patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_y', do_some_math(80, aspect_ratio))
-            patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(450, aspect_ratio))
+
             # patch_blyt('GameSplashScreen_00', 'P_pict_Mario', 'shift_y', do_some_math(200, aspect_ratio))
             # patch_blyt('GameSplashScreen_00', 'P_pict_DK', 'shift_x', do_some_math(-200, aspect_ratio))
 
@@ -423,5 +442,22 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder, expiremental_menu):
         patch_blyt('PaFooter_00', 'N_null_00', 'shift_y', do_some_math(-495, aspect_ratio))
         # patch_blyt('PaMenu_Btn_Slot', 'P_Highlight', 'scale_y', 1/s1)
 
-        # if HUD_pos == 'corner':
-        #     print("Shifitng elements for corner HUD")
+        if HUD_pos == 'corner':
+            print("Shifitng elements for corner HUD")
+            y_layout_map = {
+                'GameLevelPauseMenu_00': ['L_Lives'],
+                'GameLevelSelect_00': ['L_GameMode', 'P_Icon', 'T_WorldName_00', 'L_StarScore', 'L_Lives'],
+                'PaFooter_00': ['L_Select_01', 'L_ButtonB_01', 'L_ButtonX_01', 'L_ButtonA_01', 'L_Special_00', 'L_ButtonX_00'],
+                'GameSplashScreen_00': ['P_pict_Mario', 'P_pict_DK'],
+                'GameLevelWin_00': ['A_alignment_00', 'L_World'],
+                'PaCamera_00': ['T_1P_Text', 'P_RightArrow_1P', 'P_LeftArrow_1P', 'P_camera_1P',
+                                'T_2P_Text', 'P_RightArrow_2P', 'P_LeftArrow_2P', 'P_camera_2P'],
+                'WorldIntro': ['P_Icon_00', 'T_WorldName_00'],
+                'PaActionGuidePage': ['Scrollbar'],
+                'Pa_ActionGuideHeader': ['T_ActionGuideText', 'N_PS_G'],
+                'GameLevelHUD_00': ['P_BorderL', 'P_BorderR', 'L_Lives', 'N_TA_Timer', 'N_Time', 'L_Time', 'N_Collectable',
+                                    'N_Block_T', 'N_Block_Y', 'N_DK'],
+                'Cutscene_Skip': ['L_Skip_00'],
+                'CongratsScreen': ['P_Logo']
+            }
+            patch_ui_layouts(y_layout_map, "y")
